@@ -1,16 +1,15 @@
 import handleError from "../helpers/handleError.js";
 import User from "../models/user.model.js";
-import bcrypt from "bcrypt"
+import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
 dotenv.config();
-
 
 export async function register(req, res, next) {
   const { name, email, password } = req.body;
 
   try {
-    const checkUser = User.findOne({ email });
+    const checkUser = await User.findOne({ email });
     if (checkUser) {
       next(handleError(400, "User already exist with this email"));
     }
@@ -35,9 +34,9 @@ export async function register(req, res, next) {
 }
 
 export async function login(req, res, next) {
-  const { name, email, password } = req.body;
+  const { email, password } = req.body;
   try {
-    const checkUser = User.findOne({ email });
+    const checkUser =await User.findOne({ email });
     if (!checkUser) {
       next(handleError(404, "Email or password is not valid"));
     }
@@ -47,20 +46,38 @@ export async function login(req, res, next) {
       next(handleError(404, "Email or password is not valid"));
     }
 
-    const token = jwt.sign({ userId: checkUser._id }, process.env.JWT_SECRET, {
-      expiresIn: "2h",
-    });
+    const token = jwt.sign(
+      {
+        _id: checkUser._id,
+        name: checkUser.name,
+        email: checkUser.email,
+        role: checkUser.role,
+      },
+      process.env.JWT_SECRET,
+      {
+        expiresIn: "2h",
+      }
+    );
+
+    const user={
+        _id: checkUser._id,
+        name: checkUser.name,
+        email: checkUser.email,
+        role: checkUser.role,
+    }
+
+    res.cookie("access-token",token,{
+      httpOnly:true,
+      secure:process.env.NODE_ENV==="production",
+      sameSite:process.env.NODE_ENV==="production" ? "none" : "strict",
+      path:"/"
+    })
 
     return res.status(200).json({
-        success:true,
-        message:"Logged in successfully",
-        user:{
-            _id:checkUser._id,
-            email:checkUser.email,
-            role:checkUser.role,
-            accessToken:token
-        }
-    })
+      success: true,
+      message: "Logged in successfully",
+      user
+    });
   } catch (error) {
     next(handleError(500, error.message));
   }

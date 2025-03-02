@@ -9,9 +9,11 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import getEnv from "@/helpers/getEnv";
+import showToast from "@/helpers/showToast";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { z } from "zod";
 
 const formSchema = z.object({
@@ -40,8 +42,31 @@ const Register = () => {
     },
   });
 
-  function onSubmit(values) {
-    console.log(values);
+  const navigate=useNavigate()
+
+  async function onSubmit(values) {
+   
+    //api call
+    try {
+      const response = await fetch(`${getEnv("VITE_BASE_URL")}/auth/register`, {
+        method: "POST", 
+        headers: {
+          "Content-Type": "application/json", 
+        },
+        body: JSON.stringify(values), 
+      });
+      const data=await response.json();
+    
+      if(!response.ok){
+        showToast("error",data.message);
+        return
+      }
+      navigate("/login")
+      showToast("success",data.message);
+    } catch (error) {
+      console.error("Registration error:", error.message); 
+      showToast("error",error.message);
+    }
   }
   return (
     <div className="flex justify-center items-center w-full min-h-screen">

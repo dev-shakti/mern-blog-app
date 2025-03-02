@@ -9,9 +9,11 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import getEnv from "@/helpers/getEnv";
+import showToast from "@/helpers/showToast";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { z } from "zod";
 
 const formSchema = z.object({
@@ -30,8 +32,32 @@ const Login = () => {
     },
   });
 
-  function onSubmit(values) {
-    console.log(values);
+  const navigate = useNavigate();
+
+  async function onSubmit(values) {
+    //api call
+    try {
+      const response = await fetch(`${getEnv("VITE_BASE_URL")}/auth/login`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          credentials: true,
+        },
+        body: JSON.stringify(values),
+      });
+      const data = await response.json();
+console.log(data);
+
+      if (!response.ok) {
+        showToast("error", data.message);
+        return;
+      }
+      navigate("/");
+      showToast("success", data.message);
+    } catch (error) {
+      console.error("Registration error:", error.message);
+      showToast("error", error.message);
+    }
   }
   return (
     <div className="flex justify-center items-center w-full min-h-screen">
@@ -74,7 +100,7 @@ const Login = () => {
               Login
             </Button>
             <p className="text-sm text-gray-600 text-center">
-              Already have an account ? {" "}
+              Already have an account ?{" "}
               <Link
                 to="/register"
                 className="hover:underline text-blue-500 hover:text-blue-600"
@@ -90,4 +116,3 @@ const Login = () => {
 };
 
 export default Login;
-

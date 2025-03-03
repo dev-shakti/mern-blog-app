@@ -11,8 +11,10 @@ import {
 import { Input } from "@/components/ui/input";
 import getEnv from "@/helpers/getEnv";
 import showToast from "@/helpers/showToast";
+import { loginUser } from "@/redux/authSlice";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { z } from "zod";
 
@@ -31,7 +33,7 @@ const Login = () => {
       password: "",
     },
   });
-
+  const dispatch=useDispatch()
   const navigate = useNavigate();
 
   async function onSubmit(values) {
@@ -46,12 +48,13 @@ const Login = () => {
         body: JSON.stringify(values),
       });
       const data = await response.json();
-console.log(data);
 
       if (!response.ok) {
         showToast("error", data.message);
         return;
       }
+
+      dispatch(loginUser(data.user))
       navigate("/");
       showToast("success", data.message);
     } catch (error) {

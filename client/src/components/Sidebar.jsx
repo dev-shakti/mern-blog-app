@@ -15,28 +15,28 @@ import { Link } from "react-router-dom";
 const items = [
   {
     title: "Home",
-    url: "#",
+    url: "/",
     icon: Home,
   },
   {
     title: "Categories",
-    url: "#",
+    url: "/category",
     icon: Inbox,
   },
   {
     title: "Blogs",
-    url: "#",
+    url: "/blogs",
     icon: Calendar,
   },
   {
     title: "Comments",
-    url: "#",
-    icon: MessageSquare, // ✅ Fixed missing icon
+    url: "/comments",
+    icon: MessageSquare, 
   },
   {
     title: "Users",
     url: "#",
-    icon: User2, // ✅ Corrected import name
+    icon: User2,
   },
 ];
 const AppSidebar = () => {

@@ -4,6 +4,8 @@ import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
 import ConnectToDB from "./db/db.js";
 import authRoute from "./routes/user.route.js"
+import categoryRoute from "./routes/category.route.js";
+
 dotenv.config();
 
 //initial app
@@ -24,7 +26,7 @@ app.use(cors({
 }))
 
 app.use("/api/auth",authRoute)
-
+app.use("/api/category",categoryRoute)
 
 //listening to app
 app.listen(PORT, () => {

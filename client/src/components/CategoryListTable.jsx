@@ -47,7 +47,7 @@ const CategoryListTable = ({ categories, loading, error,onEdit,onDelete }) => {
                         <Edit2 className="w-6 h-6 text-gray-700 group-hover:text-white" />
                       </Button>
                       <Button
-                      onClick={() => onDelete(cat)}
+                      onClick={() => onDelete(cat._id)}
                         variant="outline"
                         className="rounded-full hover:bg-red-500 hover:text-white cursor-pointer"
                       >

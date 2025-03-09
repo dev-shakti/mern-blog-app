@@ -14,6 +14,7 @@ export async function addCategory(req, res, next) {
     return res.status(200).json({
       success: true,
       message: "Category added successfully",
+      category:newCategory
     });
   } catch (error) {
     next(handleError(500, error.message));
@@ -77,6 +78,8 @@ export async function updateCategory(req, res, next) {
 
 export async function deleteCategory(req, res, next) {
     const { categoryId } = req.params;
+    console.log(categoryId);
+    
   try {
     const category=await Category.findByIdAndDelete(categoryId);
 
@@ -87,6 +90,7 @@ export async function deleteCategory(req, res, next) {
     return res.status(200).json({
         success: true,
         message: "Category deleted successfully",
+        category
       });
   } catch (error) {
     next(handleError(500, error.message));

@@ -5,6 +5,7 @@ import cookieParser from "cookie-parser";
 import ConnectToDB from "./db/db.js";
 import authRoute from "./routes/user.route.js"
 import categoryRoute from "./routes/category.route.js";
+import blogRoute from "./routes/blog.route.js";
 
 dotenv.config();
 
@@ -18,6 +19,7 @@ const PORT = process.env.PORT || 3000;
 
 //middlewares
 app.use(express.json());
+app.use(express.urlencoded({ extended: true })); 
 app.use(cookieParser());
 
 app.use(cors({
@@ -25,8 +27,11 @@ app.use(cors({
   credentials:true
 }))
 
+
 app.use("/api/auth",authRoute)
 app.use("/api/category",categoryRoute)
+app.use("/api/blog",blogRoute)
+
 
 //listening to app
 app.listen(PORT, () => {

@@ -1,15 +1,125 @@
 import AddBlogDialog from "@/components/AddBlogDialog";
 import BlogListTable from "@/components/BlogListTable";
 import { Button } from "@/components/ui/button";
-import useBlogDialog from "@/hooks/useBlogDialogActions";
-import React from "react";
+import getEnv from "@/helpers/getEnv";
+import showToast from "@/helpers/showToast";
+import useCategoryActions from "@/hooks/useCategoryActions";
+// import useBlogDialog from "@/hooks/useBlogDialogActions";
+import { zodResolver } from "@hookform/resolvers/zod";
+import React, { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
+import { useSelector } from "react-redux";
+import slugify from "react-slugify";
+import { z } from "zod";
+
+const blogFormSchema = z.object({
+  title: z.string().min(3, {
+    message: "Name must be at least 3 characters.",
+  }),
+  category: z.string().min(3, {
+    message: "Name must be at least 3 characters.",
+  }),
+  slug: z.string().min(6, {
+    message: "Slug must be at least 3 characters.",
+  }),
+  content: z.string(),
+});
 
 const Blogs = () => {
-    const { open, currentEditedId, form, openDialog, closeDialog }=useBlogDialog();
+  const { categories } = useCategoryActions();
+  const { user } = useSelector((state) => state.auth);
+  const [image, setImage] = useState(null);
+  //const [file, setFile] = useState(null);
+  const [open, setOpen] = useState(false);
+
+  const form = useForm({
+    resolver: zodResolver(blogFormSchema),
+    defaultValues: {
+      title: "",
+      slug: "",
+      content: "",
+      category: "",
+    },
+  });
+
+  const { setValue, watch, reset } = form;
+  const titleValue = watch("title");
+
+  function handleFile(acceptedFiles) {
+    const file = acceptedFiles[0];
+    if (file) {
+      setImage({
+        file, // Store the actual file
+        preview: URL.createObjectURL(file), // Store preview URL
+      });
+    }
+  }
+
+  function handleCloseDialog() {
+    setOpen(false);
+    reset();
+  }
+
+ async function handleBlogForm(values) {
+    console.log("Form Values:", values);
+    const formData = new FormData();
+    formData.append("title", values.title);
+    formData.append("slug", values.slug);
+    formData.append("category", values.category);
+    formData.append("content", values.content);
+    formData.append("author", user?._id);
+    if (image?.file) {
+      formData.append("file", image.file); 
+    }
+
+    try {
+          const response = await fetch(`${getEnv("VITE_BASE_URL")}/blog/add`, {
+            method: "POST",
+            headers: {
+              credentials: true,
+            },
+            body:formData,
+          });
+          const data = await response.json();
+           console.log(data);
+           
+          if (!response.ok) {
+            showToast("error", data.message);
+            return;
+          }
+          setOpen(false);
+          reset();
+          showToast("success", data.message);
+        } catch (error) {
+          console.error("Registration error:", error.message);
+          showToast("error", error.message);
+        }
+  
+  }
+
+  useEffect(() => {
+    if (titleValue) {
+      const baseSlug = slugify(titleValue, {
+        lower: true,
+        strict: true,
+        trim: true,
+      });
+
+      // Generate a unique part (timestamp or random ID)
+      const uniqueSuffix = Date.now().toString().slice(-4);
+      const uniqueSlug = `${baseSlug}-${uniqueSuffix}`;
+
+      setValue("slug", uniqueSlug);
+    }
+  }, [titleValue, setValue]);
+
   return (
     <div className="p-4 lg:p-6">
       <div className="flex justify-end mb-6">
-        <Button onClick={openDialog} className="bg-violet-500 hover:bg-violet-600 cursor-pointer">
+        <Button
+          onClick={() => setOpen(true)}
+          className="bg-violet-500 hover:bg-violet-600 cursor-pointer"
+        >
           Add Blog
         </Button>
       </div>
@@ -17,12 +127,17 @@ const Blogs = () => {
         All Blog Lists
       </h1>
       <BlogListTable />
-      {open && <AddBlogDialog 
-      currentEditedId={currentEditedId} 
-      form={form} 
-      openBlogDialog={open}
-      onClose={closeDialog}
-      />}
+      {open && (
+        <AddBlogDialog
+          form={form}
+          open={open}
+          onClose={handleCloseDialog}
+          image={image}
+          handleFile={handleFile}
+          handleBlogForm={handleBlogForm}
+          categories={categories}
+        />
+      )}
     </div>
   );
 };

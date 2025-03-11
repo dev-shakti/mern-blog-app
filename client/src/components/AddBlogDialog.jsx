@@ -33,14 +33,15 @@ const AddBlogDialog = ({
   handleFile,
   image,
   categories,
+  currentEditedId
 }) => {
-  console.log(categories);
-
   return (
     <Dialog open={open} onOpenChange={onClose}>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle className="text-2xl font-semibold">Add Blog</DialogTitle>
+          <DialogTitle className="text-2xl font-semibold">
+            {currentEditedId ? "Edit" : "Add"}
+          </DialogTitle>
         </DialogHeader>
 
         <Form {...form}>
@@ -52,28 +53,38 @@ const AddBlogDialog = ({
             <FormField
               control={form.control}
               name="category"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className="text-lg font-medium">Category</FormLabel>
-                  <FormControl>
-                    <Select onValueChange={field.onChange} defaultValue={field.value}>
-                      <SelectTrigger className="w-full">
-                        <SelectValue placeholder="Category" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        {categories &&
-                          categories.length > 0 &&
-                          categories.map((cat) => (
-                            <SelectItem value={cat?._id} key={cat?._id}>
-                              {cat?.name}
-                            </SelectItem>
-                          ))}
-                      </SelectContent>
-                    </Select>
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
+              render={({ field }) => {
+                return (
+                  <FormItem>
+                    <FormLabel className="text-lg font-medium">
+                      Category
+                    </FormLabel>
+                    <FormControl>
+                      <Select
+                        value={field.value}
+                        onValueChange={field.onChange}
+                      >
+                        <SelectTrigger className="w-full">
+                          <SelectValue defaultValue={field.value}>
+                            {categories.find((cat) => cat._id === field.value)
+                              ?.name || "Select Category"}
+                          </SelectValue>
+                        </SelectTrigger>
+                        <SelectContent>
+                          {categories &&
+                            categories.length > 0 &&
+                            categories.map((cat) => (
+                              <SelectItem value={cat._id} key={cat._id}>
+                                {cat.name}
+                              </SelectItem>
+                            ))}
+                        </SelectContent>
+                      </Select>
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                );
+              }}
             />
 
             {/* Title Input */}
@@ -160,7 +171,7 @@ const AddBlogDialog = ({
               type="submit"
               className="bg-violet-500 hover:bg-violet-600 cursor-pointer w-full py-2 text-lg font-medium"
             >
-              Add Blog
+             {currentEditedId ? "Save Changes" : "Add"}
             </Button>
           </form>
         </Form>

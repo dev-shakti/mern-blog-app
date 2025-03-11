@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import getEnv from "@/helpers/getEnv";
 import showToast from "@/helpers/showToast";
 import useCategoryActions from "@/hooks/useCategoryActions";
+import useFetch from "@/hooks/useFetch";
 // import useBlogDialog from "@/hooks/useBlogDialogActions";
 import { zodResolver } from "@hookform/resolvers/zod";
 import React, { useEffect, useState } from "react";
@@ -27,10 +28,14 @@ const blogFormSchema = z.object({
 
 const Blogs = () => {
   const { categories } = useCategoryActions();
+  const { loading, data, error } = useFetch(
+    `${getEnv("VITE_BASE_URL")}/blog/get`
+  );
   const { user } = useSelector((state) => state.auth);
   const [image, setImage] = useState(null);
-  //const [file, setFile] = useState(null);
   const [open, setOpen] = useState(false);
+  const [blogs, setBlogs] = useState([]);
+  const [currentEditedId, setCurrentEditedId] = useState(null);
 
   const form = useForm({
     resolver: zodResolver(blogFormSchema),
@@ -58,10 +63,10 @@ const Blogs = () => {
   function handleCloseDialog() {
     setOpen(false);
     reset();
+    setCurrentEditedId(null);
   }
 
- async function handleBlogForm(values) {
-    console.log("Form Values:", values);
+  async function handleBlogForm(values) {
     const formData = new FormData();
     formData.append("title", values.title);
     formData.append("slug", values.slug);
@@ -69,32 +74,88 @@ const Blogs = () => {
     formData.append("content", values.content);
     formData.append("author", user?._id);
     if (image?.file) {
-      formData.append("file", image.file); 
+      formData.append("file", image.file);
     }
 
+    const url = currentEditedId
+      ? `${getEnv("VITE_BASE_URL")}/blog/${currentEditedId}/edit`
+      : `${getEnv("VITE_BASE_URL")}/blog/add`;
+    const method = currentEditedId ? "PUT" : "POST";
+
     try {
-          const response = await fetch(`${getEnv("VITE_BASE_URL")}/blog/add`, {
-            method: "POST",
-            headers: {
-              credentials: true,
-            },
-            body:formData,
-          });
+      const response = await fetch(url, {
+        method: method,
+        headers: {
+          credentials: true,
+        },
+        body: formData,
+      });
+      const data = await response.json();
+console.log(data);
+
+      if (!response.ok) {
+        showToast("error", data.message);
+        return;
+      }
+
+      setBlogs((prev) =>
+        currentEditedId
+          ? prev.map((blog) =>
+              blog._id === currentEditedId ? data.blog : blog
+            )
+          : [...prev, data.blog]
+      );
+     
+      setOpen(false);
+      setImage(null);
+      setCurrentEditedId(null);
+      reset();
+      showToast("success", data.message);
+    } catch (error) {
+      console.error("Registration error:", error.message);
+      showToast("error", error.message);
+    }
+  }
+
+  function handleEditBlog(currentBlogItem) {
+    if (currentBlogItem) {
+      setCurrentEditedId(currentBlogItem?._id);
+      setOpen(true);
+      setValue("title", currentBlogItem.title);
+      setValue("slug", currentBlogItem.slug);
+      setValue("category", currentBlogItem.category._id);
+      setValue("content", currentBlogItem.content);
+    }
+  }
+
+  async function handleDeleteBlog(currentBlogId) {
+    
+    try {
+          const response = await fetch(
+            `${getEnv("VITE_BASE_URL")}/blog/${currentBlogId}/delete`,
+            {
+              method: "DELETE",
+              headers: {
+                "Content-Type": "application/json",
+                credentials: true,
+              },
+            }
+          );
           const data = await response.json();
-           console.log(data);
-           
+    
           if (!response.ok) {
             showToast("error", data.message);
             return;
           }
-          setOpen(false);
-          reset();
+          const updatedData =blogs.filter(
+            (blog) => blog._id !== data.blog._id
+          );
+          setBlogs(updatedData);
           showToast("success", data.message);
         } catch (error) {
-          console.error("Registration error:", error.message);
+          console.error(error.message);
           showToast("error", error.message);
         }
-  
   }
 
   useEffect(() => {
@@ -113,6 +174,13 @@ const Blogs = () => {
     }
   }, [titleValue, setValue]);
 
+  useEffect(() => {
+    if (data?.blogs) {
+      setBlogs(data.blogs);
+    }
+  }, [data]);
+console.log(data);
+
   return (
     <div className="p-4 lg:p-6">
       <div className="flex justify-end mb-6">
@@ -126,7 +194,13 @@ const Blogs = () => {
       <h1 className="text-2xl lg:text-3xl font-bold tracking-tight mb-6">
         All Blog Lists
       </h1>
-      <BlogListTable />
+      <BlogListTable
+        blogs={blogs}
+        loading={loading}
+        error={error}
+        onEdit={handleEditBlog}
+        onDelete={handleDeleteBlog}
+      />
       {open && (
         <AddBlogDialog
           form={form}
@@ -136,6 +210,7 @@ const Blogs = () => {
           handleFile={handleFile}
           handleBlogForm={handleBlogForm}
           categories={categories}
+          currentEditedId={currentEditedId}
         />
       )}
     </div>

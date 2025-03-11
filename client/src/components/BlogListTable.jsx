@@ -10,8 +10,16 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { DeleteIcon, Edit2 } from "lucide-react";
+import moment from "moment";
+import Loading from "./common/Loading";
 
-const BlogListTable = () => {
+const BlogListTable = ({blogs,loading,error,onEdit,onDelete}) => {
+  if (loading)
+    return <Loading/>;
+  if (error)
+    return (
+      <p className="text-center text-red-500">Failed to load blogs.</p>
+    );
   return (
     <Card>
       <CardContent>
@@ -28,21 +36,25 @@ const BlogListTable = () => {
             </TableRow>
           </TableHeader>
           <TableBody>
-            <TableRow>
-              <TableCell>Title</TableCell>
-              <TableCell>Author</TableCell>
-              <TableCell>Title</TableCell>
-              <TableCell>Category</TableCell>
-              <TableCell>Date</TableCell>
+            {blogs && blogs.length> 0 ? 
+            blogs.map((blog) => (
+              <TableRow key={blog?.id}>
+              <TableCell>{blog?.title}</TableCell>
+              <TableCell>{blog?.author?.name}</TableCell>
+              <TableCell>{blog?.category?.name}</TableCell>
+              <TableCell>{blog?.slug}</TableCell>
+              <TableCell>{moment(blog?.createdAt).format("HH:mm:ss")}</TableCell>
               <TableCell className="text-right">
                 <div className="flex justify-end items-center gap-2">
                   <Button
+                  onClick={() => onEdit(blog)}
                     variant="outline"
                     className="rounded-full hover:bg-teal-500 hover:text-white cursor-pointer"
                   >
                     <Edit2 className="w-6 h-6 text-gray-700 group-hover:text-white" />
                   </Button>
                   <Button
+                   onClick={() => onDelete(blog?._id)}
                     variant="outline"
                     className="rounded-full hover:bg-red-500 hover:text-white cursor-pointer"
                   >
@@ -51,6 +63,10 @@ const BlogListTable = () => {
                 </div>
               </TableCell>
             </TableRow>
+            ))
+            : 
+            <TableRow><TableCell>Blogs Not Found</TableCell></TableRow>}
+           
           </TableBody>
         </Table>
       </CardContent>

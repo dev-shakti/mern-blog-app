@@ -61,6 +61,8 @@ export default function useCategoryActions() {
   }
 
   async function handleDeleteCategory(categoryId) {
+
+    
     try {
       const response = await fetch(
         `${getEnv("VITE_BASE_URL")}/category/${categoryId}/delete`,
@@ -73,7 +75,6 @@ export default function useCategoryActions() {
         }
       );
       const data = await response.json();
-      console.log(data);
 
       if (!response.ok) {
         showToast("error", data.message);

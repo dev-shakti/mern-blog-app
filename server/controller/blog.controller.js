@@ -19,12 +19,12 @@ export async function createBlog(req, res, next) {
     await createNewBlog.save();
     
     // Populate category and author before sending the response
-    const populatedBlog = await Blog.findById(createNewBlog._id)
-      .populate("category", "name")
-      .populate("author", "name");
+    // const populatedBlog = await Blog.findById(createNewBlog._id)
+    //   .populate("category", "name")
+    //   .populate("author", "name");
 
     return res.status(201).json({
-      blog: populatedBlog,
+      blog: createNewBlog,
       success: true,
       message: "Blog created successfully",
     });
@@ -92,14 +92,14 @@ export async function editBlog(req, res, next) {
 
     await blog.save();
 
-    const updatedBlog = await Blog.findById(blogId)
-      .populate("category", "name")
-      .populate("author", "name");
+    // const updatedBlog = await Blog.findById(blogId)
+    //   .populate("category", "name")
+    //   .populate("author", "name");
 
     return res.status(200).json({
       success: true,
       message: "Blog updated successfully",
-      blog: updatedBlog,
+      blog,
     });
   } catch (error) {
     console.error(error);

@@ -24,6 +24,7 @@ import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { Textarea } from "./ui/textarea";
 import Dropzone from "react-dropzone";
+import { Loader2 } from "lucide-react";
 
 const AddBlogDialog = ({
   open,
@@ -33,7 +34,8 @@ const AddBlogDialog = ({
   handleFile,
   image,
   categories,
-  currentEditedId
+  currentEditedId,
+  loading,
 }) => {
   return (
     <Dialog open={open} onOpenChange={onClose}>
@@ -169,9 +171,15 @@ const AddBlogDialog = ({
             {/* Submit Button */}
             <Button
               type="submit"
-              className="bg-violet-500 hover:bg-violet-600 cursor-pointer w-full py-2 text-lg font-medium"
+              disabled={loading}
+              className={`${
+                loading ? "cursor-not-allowed bg-gray-300 text-gray-900 " : ""
+              }bg-violet-500 hover:bg-violet-600 cursor-pointer w-full py-2 text-lg font-medium `}
             >
-             {currentEditedId ? "Save Changes" : "Add"}
+             <Loader2 className={`w-4 h-4 ${loading ? "animate-spin block" : "hidden"}`} />
+              <span className="ml-2">
+                {currentEditedId ? "Save Changes" : "Add"}
+              </span>
             </Button>
           </form>
         </Form>

@@ -28,13 +28,12 @@ const blogFormSchema = z.object({
 
 const Blogs = () => {
   const { categories } = useCategoryActions();
-  const { loading, data, error } = useFetch(
+  const { loading, data, error,refetch } = useFetch(
     `${getEnv("VITE_BASE_URL")}/blog/get`
   );
   const { user } = useSelector((state) => state.auth);
   const [image, setImage] = useState(null);
   const [open, setOpen] = useState(false);
-  const [blogs, setBlogs] = useState([]);
   const [currentEditedId, setCurrentEditedId] = useState(null);
 
   const form = useForm({
@@ -91,21 +90,13 @@ const Blogs = () => {
         body: formData,
       });
       const data = await response.json();
-console.log(data);
+
 
       if (!response.ok) {
         showToast("error", data.message);
         return;
       }
-
-      setBlogs((prev) =>
-        currentEditedId
-          ? prev.map((blog) =>
-              blog._id === currentEditedId ? data.blog : blog
-            )
-          : [...prev, data.blog]
-      );
-     
+      await refetch();     
       setOpen(false);
       setImage(null);
       setCurrentEditedId(null);
@@ -147,10 +138,7 @@ console.log(data);
             showToast("error", data.message);
             return;
           }
-          const updatedData =blogs.filter(
-            (blog) => blog._id !== data.blog._id
-          );
-          setBlogs(updatedData);
+          await refetch();
           showToast("success", data.message);
         } catch (error) {
           console.error(error.message);
@@ -174,13 +162,6 @@ console.log(data);
     }
   }, [titleValue, setValue]);
 
-  useEffect(() => {
-    if (data?.blogs) {
-      setBlogs(data.blogs);
-    }
-  }, [data]);
-console.log(data);
-
   return (
     <div className="p-4 lg:p-6">
       <div className="flex justify-end mb-6">
@@ -195,7 +176,7 @@ console.log(data);
         All Blog Lists
       </h1>
       <BlogListTable
-        blogs={blogs}
+        blogs={data.blogs || []}
         loading={loading}
         error={error}
         onEdit={handleEditBlog}
@@ -211,6 +192,7 @@ console.log(data);
           handleBlogForm={handleBlogForm}
           categories={categories}
           currentEditedId={currentEditedId}
+          loading={loading}
         />
       )}
     </div>

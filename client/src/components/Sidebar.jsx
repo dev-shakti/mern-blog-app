@@ -11,6 +11,8 @@ import {
   SidebarMenuItem,
 } from "./ui/sidebar";
 import { Link } from "react-router-dom";
+import useFetch from "@/hooks/useFetch";
+import getEnv from "@/helpers/getEnv";
 
 const items = [
   {
@@ -31,7 +33,7 @@ const items = [
   {
     title: "Comments",
     url: "/comments",
-    icon: MessageSquare, 
+    icon: MessageSquare,
   },
   {
     title: "Users",
@@ -40,6 +42,14 @@ const items = [
   },
 ];
 const AppSidebar = () => {
+  const {
+    loading,
+    data: categoryData,
+    error,
+  } = useFetch(`${getEnv("VITE_BASE_URL")}/category/get`);
+
+  console.log(categoryData);
+
   return (
     <Sidebar>
       <SidebarContent>
@@ -64,13 +74,19 @@ const AppSidebar = () => {
           <SidebarGroupLabel>Categories</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
-              <SidebarMenuItem>
-                <SidebarMenuButton asChild>
-                  <Link to="">
-                    <span>Category item</span>
-                  </Link>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
+              {categoryData &&
+              categoryData.categories &&
+              categoryData.categories.length > 0
+                ? categoryData.categories.map((cat) => (
+                    <SidebarMenuItem key={cat?._id}>
+                      <SidebarMenuButton asChild>
+                        <Link to="">
+                          <span>{cat?.name}</span>
+                        </Link>
+                      </SidebarMenuButton>
+                    </SidebarMenuItem>
+                  ))
+                : null}
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>

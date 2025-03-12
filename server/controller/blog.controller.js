@@ -33,7 +33,9 @@ export async function getAllBlogs(req, res, next) {
   try {
     const blogs = await Blog.find()
       .populate("author", "name role profileImage")
-      .populate("category", "name");
+      .populate("category", "name")
+      .sort({ createdAt: -1 }) // Sort by createdAt in descending order (newest first)
+      .lean();
 
     return res.status(200).json({
       success: true,
@@ -45,11 +47,15 @@ export async function getAllBlogs(req, res, next) {
   }
 }
 
-export async function getBlogById(req, res, next) {
-  const { blogId } = req.params;
+export async function getBlogBySlug(req, res, next) {
+  const { slug } = req.params;
 
   try {
-    const blog = await Blog.findById(blogId);
+    const blog = await Blog.findOne({ slug })
+      .populate("author", "name role profileImage")
+      .populate("category", "name")
+      .lean();
+
     if (!blog) {
       return next(handleError(404, "Blog not found"));
     }

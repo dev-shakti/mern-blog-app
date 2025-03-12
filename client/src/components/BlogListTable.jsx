@@ -43,7 +43,7 @@ const BlogListTable = ({blogs,loading,error,onEdit,onDelete}) => {
               <TableCell>{blog?.author?.name}</TableCell>
               <TableCell>{blog?.category?.name}</TableCell>
               <TableCell>{blog?.slug}</TableCell>
-              <TableCell>{moment(blog?.createdAt).format("HH:mm:ss")}</TableCell>
+              <TableCell>{moment(blog?.createdAt).format("DD:MM:YYYY")}</TableCell>
               <TableCell className="text-right">
                 <div className="flex justify-end items-center gap-2">
                   <Button

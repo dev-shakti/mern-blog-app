@@ -6,6 +6,7 @@ import Register from "./pages/Register"
 import Profile from "./pages/Profile"
 import CategoryList from "./pages/CategoryList"
 import Blogs from "./pages/Blogs"
+import BlogDetails from "./pages/BlogDetails"
 
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
            <Route path="/profile" element={<Profile/>}/>
            <Route path="/category" element={<CategoryList/>}/>
            <Route path="/blogs" element={<Blogs/>}/>
+           <Route path="/blog/:categoryName/:slug" element={<BlogDetails/>}/>
         </Route>
         <Route path="/login" element={<Login/>}/>
         <Route path="/register" element={<Register/>}/>

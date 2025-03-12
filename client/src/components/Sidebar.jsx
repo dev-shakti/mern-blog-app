@@ -42,13 +42,9 @@ const items = [
   },
 ];
 const AppSidebar = () => {
-  const {
-    loading,
-    data: categoryData,
-    error,
-  } = useFetch(`${getEnv("VITE_BASE_URL")}/category/get`);
-
-  console.log(categoryData);
+  const { data: categoryData } = useFetch(
+    `${getEnv("VITE_BASE_URL")}/category/get`
+  );
 
   return (
     <Sidebar>

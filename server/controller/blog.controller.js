@@ -17,11 +17,6 @@ export async function createBlog(req, res, next) {
     });
 
     await createNewBlog.save();
-    
-    // Populate category and author before sending the response
-    // const populatedBlog = await Blog.findById(createNewBlog._id)
-    //   .populate("category", "name")
-    //   .populate("author", "name");
 
     return res.status(201).json({
       blog: createNewBlog,
@@ -37,7 +32,7 @@ export async function createBlog(req, res, next) {
 export async function getAllBlogs(req, res, next) {
   try {
     const blogs = await Blog.find()
-      .populate("author", "name")
+      .populate("author", "name role profileImage")
       .populate("category", "name");
 
     return res.status(200).json({
@@ -91,10 +86,6 @@ export async function editBlog(req, res, next) {
     }
 
     await blog.save();
-
-    // const updatedBlog = await Blog.findById(blogId)
-    //   .populate("category", "name")
-    //   .populate("author", "name");
 
     return res.status(200).json({
       success: true,

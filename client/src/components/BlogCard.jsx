@@ -13,8 +13,7 @@ import { Button } from "./ui/button";
 import { Bookmark } from "lucide-react";
 
 
-const BlogCard = ({ blog }) => {
-
+const BlogCard = ({ blog }) => { 
   return (
     <Link  to={`/blog/${blog.category.name}/${blog.slug}`}>
      <Card className="bg-white rounded-lg shadow-md hover:shadow-xl p-4 hover:scale-105 transition-all ease-in-out duration-300 cursor-pointer">

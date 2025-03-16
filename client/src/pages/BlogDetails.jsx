@@ -3,18 +3,25 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Card, CardContent } from "@/components/ui/card";
 import getEnv from "@/helpers/getEnv";
 import useFetch from "@/hooks/useFetch";
+import { HeartIcon } from "lucide-react";
 import React from "react";
 import { useParams } from "react-router-dom";
+import { MessageCircle } from "lucide-react";
+import { Separator } from "@/components/ui/separator";
+import Comments from "@/components/Comments";
+import LikeCount from "@/components/LikeCount";
 
 const BlogDetails = () => {
   const { slug } = useParams();
-  console.log(slug);
-
+  
   const {
     loading,
     data: blogData,
     error,
-  } = useFetch(`${getEnv("VITE_BASE_URL")}/blog/get/${slug}`);
+  } = useFetch(
+    slug ? `${getEnv("VITE_BASE_URL")}/blog/get/${slug}` : null,
+    [slug]
+  );
 
   if (loading) {
     return <Loading />;
@@ -24,6 +31,8 @@ const BlogDetails = () => {
     return <p className="text-red-500 text-xl">Blogs Not Found</p>;
   }
 
+
+ 
   return (
     <section className="p-6">
       <Card className="bg-white rounded-lg shadow-md hover:shadow-xl p-6 w-full max-w-5xl mx-auto">
@@ -48,7 +57,14 @@ const BlogDetails = () => {
                 <p className="text-sm text-gray-600 mt-1">Posted 2 days ago</p>
               </div>
             </div>
-            <div>right</div>
+            <div className="flex items-center gap-4">
+              <LikeCount blogId={blogData?.blog?._id}/>
+
+              <div className="flex items-center gap-1">
+                <MessageCircle className="w-6 h-6" />
+                <span>5</span>
+              </div>
+            </div>
           </div>
           <h2 className="text-2xl font-bold mt-6">{blogData?.blog?.title}</h2>
           <div className="w-full h-96 my-6">
@@ -62,6 +78,11 @@ const BlogDetails = () => {
           <p className="text-gray-700 tracking-normal leading-wide">
             {blogData?.blog?.content}
           </p>
+          <Separator className="my-6" />
+          <h4 className="text-xl font-bold tracking-tight mb-4">
+            Post Comments
+          </h4>
+          {/* <Comments blogData={blogData} /> */}
         </CardContent>
       </Card>
     </section>

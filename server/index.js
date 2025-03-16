@@ -6,6 +6,8 @@ import ConnectToDB from "./db/db.js";
 import authRoute from "./routes/user.route.js"
 import categoryRoute from "./routes/category.route.js";
 import blogRoute from "./routes/blog.route.js";
+import commentRoute from "./routes/comment.route.js";
+import likeRoute from "./routes/like.route.js";
 
 dotenv.config();
 
@@ -31,7 +33,8 @@ app.use(cors({
 app.use("/api/auth",authRoute)
 app.use("/api/category",categoryRoute)
 app.use("/api/blog",blogRoute)
-
+app.use("/api/comment",commentRoute)
+app.use("/api/like",likeRoute)
 
 //listening to app
 app.listen(PORT, () => {

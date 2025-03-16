@@ -38,12 +38,12 @@ const BlogListTable = ({blogs,loading,error,onEdit,onDelete}) => {
           <TableBody>
             {blogs && blogs.length> 0 ? 
             blogs.map((blog) => (
-              <TableRow key={blog?.id}>
+              <TableRow key={blog?._id}>
               <TableCell>{blog?.title}</TableCell>
               <TableCell>{blog?.author?.name}</TableCell>
               <TableCell>{blog?.category?.name}</TableCell>
               <TableCell>{blog?.slug}</TableCell>
-              <TableCell>{moment(blog?.createdAt).format("DD:MM:YYYY")}</TableCell>
+              <TableCell>{moment(blog?.createdAt).format("DD-MM-YYYY")}</TableCell>
               <TableCell className="text-right">
                 <div className="flex justify-end items-center gap-2">
                   <Button

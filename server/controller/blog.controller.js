@@ -49,13 +49,18 @@ export async function getAllBlogs(req, res, next) {
 
 export async function getBlogBySlug(req, res, next) {
   const { slug } = req.params;
+  
+
+  if (!slug) {
+    return next(handleError(400, "Slug is required"));
+  }
 
   try {
     const blog = await Blog.findOne({ slug })
       .populate("author", "name role profileImage")
       .populate("category", "name")
       .lean();
-
+   
     if (!blog) {
       return next(handleError(404, "Blog not found"));
     }

@@ -177,3 +177,29 @@ export async function FilterBlogsByCategory(req, res, next) {
     next(handleError(500, error.message));
   }
 }
+
+export async function searchBlogs(req, res, next) {
+  const { q } = req.query;
+  console.log(q);
+
+  try {
+    if (!q) {
+      return res
+        .status(400)
+        .json({ success: false, message: "Search query is required" });
+    }
+
+    const blogs = await Blog.find({ title: { $regex: q, $options: "i" } })
+      .populate("author", "name role profileImage")
+      .populate("category", "name")
+      .lean();
+
+    return res.status(200).json({
+      success: true,
+      blogs,
+    });
+  } catch (error) {
+    console.error(error);
+    next(handleError(500, error.message));
+  }
+}

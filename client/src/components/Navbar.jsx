@@ -51,7 +51,7 @@ const Navbar = ({ children }) => {
   return (
     <nav className="p-4 flex justify-between items-center min-h-14 border-b bg-white">
       {children}
-      <SearchBox />
+      <SearchBox  />
       {!isLoggedIn ? (
         <Link to="/login">
           <Button className="bg-blue-600 hover:bg-blue-700 flex items-center gap-2 px-4 py-2 cursor-pointer">

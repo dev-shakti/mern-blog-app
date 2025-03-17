@@ -14,7 +14,7 @@ const FilterBlogs = () => {
     : null;
   const { data: blogData, loading, error } = useFetch(url, {}, [categoryId]);
 
-  console.log(blogData);
+
 
   if (loading) {
     return <Loading />;

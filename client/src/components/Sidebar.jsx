@@ -46,6 +46,7 @@ const AppSidebar = () => {
     `${getEnv("VITE_BASE_URL")}/category/get`
   );
 
+
   return (
     <Sidebar>
       <SidebarContent>
@@ -76,7 +77,7 @@ const AppSidebar = () => {
                 ? categoryData.categories.map((cat) => (
                     <SidebarMenuItem key={cat?._id}>
                       <SidebarMenuButton asChild>
-                        <Link to="">
+                        <Link to={`/blog/category/${cat?._id}/${cat?.name}`}>
                           <span>{cat?.name}</span>
                         </Link>
                       </SidebarMenuButton>

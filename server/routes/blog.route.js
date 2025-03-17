@@ -3,8 +3,10 @@ import {
   createBlog,
   deleteBlog,
   editBlog,
+  FilterBlogsByCategory,
   getAllBlogs,
   getBlogBySlug,
+  RelatedBlogs,
 } from "../controller/blog.controller.js";
 import upload from "../config/cloudinary.js";
 
@@ -15,6 +17,7 @@ blogRoute.get("/get", getAllBlogs);
 blogRoute.get("/get/:slug", getBlogBySlug);
 blogRoute.put("/:blogId/edit",upload.single("file"), editBlog);
 blogRoute.delete("/:blogId/delete", deleteBlog);
-
+blogRoute.get("/get/blog/:categoryId/:blogId", RelatedBlogs);
+blogRoute.get("/get/blog/:categoryId", FilterBlogsByCategory);
 
 export default blogRoute

@@ -10,6 +10,7 @@ import { MessageCircle } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 import Comments from "@/components/Comments";
 import LikeCount from "@/components/LikeCount";
+import RelatedBlogs from "@/components/RelatedBlogs";
 
 const BlogDetails = () => {
   const { slug } = useParams();
@@ -32,10 +33,12 @@ const BlogDetails = () => {
   }
 
 
- 
+
   return (
     <section className="p-6">
-      <Card className="bg-white rounded-lg shadow-md hover:shadow-xl p-6 w-full max-w-5xl mx-auto">
+      <div className="flex flex-col md:flex-row gap-6">
+          <div className="w-full md:w-[70%]">
+          <Card className="bg-white rounded-lg shadow-md hover:shadow-xl p-6 w-full max-w-5xl mx-auto">
         <CardContent>
           <div className="flex justify-between items-center">
             <div className="flex gap-4">
@@ -85,6 +88,12 @@ const BlogDetails = () => {
           {/* <Comments blogData={blogData} /> */}
         </CardContent>
       </Card>
+          </div>
+          <div className="w-full md:w-[30%] mt-6 md:mt-0">
+                <RelatedBlogs categoryId={blogData?.blog?.category?._id} blogId={blogData?.blog?._id}/>
+          </div>
+      </div>
+    
     </section>
   );
 };

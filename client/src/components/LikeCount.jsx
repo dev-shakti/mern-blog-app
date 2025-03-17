@@ -9,11 +9,9 @@ import { useSelector } from "react-redux";
 const LikeCount = ({ blogId }) => {
   const { user } = useSelector((state) => state.auth);
   const [likeCount, setLikeCount] = useState(0);
+  const [like,setLike]=useState(false)
 
-  
- // const { data } = useFetch(`${getEnv("VITE_BASE_URL")}/like/get/${blogId}`);
  const url = blogId ? `${getEnv("VITE_BASE_URL")}/like/get/${blogId}` : null;
- console.log("Fetching from URL:", url);
  const { data } = useFetch(url);
 
  
@@ -45,6 +43,7 @@ const LikeCount = ({ blogId }) => {
       }
       const data = await response.json();
       setLikeCount(data.likeCount);
+      setLike((prev) =>!prev)
     } catch (error) {
       console.error("Registration error:", error.message);
       showToast("error", error.message);
@@ -57,7 +56,7 @@ const LikeCount = ({ blogId }) => {
       variant="outline"
       className="flex items-center gap-1 cursor-pointer"
     >
-      <HeartIcon className="w-6 h-6" />
+      <HeartIcon className={`${like ?"text-red-500" : ""} w-6 h-6 -red-500`} />
       <span>{likeCount}</span>
     </Button>
   );

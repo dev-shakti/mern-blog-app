@@ -1,5 +1,6 @@
 import Blog from "../models/blog.model.js";
 import handleError from "../helpers/handleError.js";
+import Category from "../models/category.model.js";
 
 export async function createBlog(req, res, next) {
   const { title, slug, category, content, author } = req.body;
@@ -49,7 +50,6 @@ export async function getAllBlogs(req, res, next) {
 
 export async function getBlogBySlug(req, res, next) {
   const { slug } = req.params;
-  
 
   if (!slug) {
     return next(handleError(400, "Slug is required"));
@@ -60,7 +60,7 @@ export async function getBlogBySlug(req, res, next) {
       .populate("author", "name role profileImage")
       .populate("category", "name")
       .lean();
-   
+
     if (!blog) {
       return next(handleError(404, "Blog not found"));
     }
@@ -123,6 +123,54 @@ export async function deleteBlog(req, res, next) {
       success: true,
       message: "Blog deleted successfully",
       blog,
+    });
+  } catch (error) {
+    console.error(error);
+    next(handleError(500, error.message));
+  }
+}
+
+export async function RelatedBlogs(req, res, next) {
+  const { categoryId, blogId } = req.params;
+  try {
+    const category = await Category.findById(categoryId);
+    if (!category) {
+      return next(handleError(404, "Category not found"));
+    }
+
+    const relatedBlogs = await Blog.find({
+      category: category,
+      _id: { $ne: blogId },
+    });
+
+    return res.status(200).json({
+      success: true,
+      blogs: relatedBlogs,
+    });
+  } catch (error) {
+    console.error(error);
+    next(handleError(500, error.message));
+  }
+}
+
+export async function FilterBlogsByCategory(req, res, next) {
+  const { categoryId } = req.params;
+  try {
+    const category = await Category.findById(categoryId);
+    if (!category) {
+      return next(handleError(404, "Category not found"));
+    }
+
+    const blogs = await Blog.find({
+      category: category,
+    })
+      .populate("author", "name role profileImage")
+      .populate("category", "name")
+      .lean();
+
+    return res.status(200).json({
+      success: true,
+      blogs,
     });
   } catch (error) {
     console.error(error);

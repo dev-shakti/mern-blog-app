@@ -7,6 +7,8 @@ import Profile from "./pages/Profile"
 import CategoryList from "./pages/CategoryList"
 import Blogs from "./pages/Blogs"
 import BlogDetails from "./pages/BlogDetails"
+import FilterBlogs from "./components/FilterBlogs"
+
 
 
 function App() {
@@ -21,6 +23,7 @@ function App() {
            <Route path="/category" element={<CategoryList/>}/>
            <Route path="/blogs" element={<Blogs/>}/>
            <Route path="/blog/:categoryName/:slug" element={<BlogDetails/>}/>
+           <Route path="/blog/category/:categoryId/:categoryName" element={<FilterBlogs/>}/>
         </Route>
         <Route path="/login" element={<Login/>}/>
         <Route path="/register" element={<Register/>}/>

@@ -92,7 +92,7 @@ const BlogDetails = () => {
           <h4 className="text-xl font-bold tracking-tight mb-4">
             Post Comments
           </h4>
-          {/* <Comments blogData={blogData} /> */}
+          <Comments blogData={blogData} />
         </CardContent>
       </Card>
           </div>

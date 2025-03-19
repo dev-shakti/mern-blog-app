@@ -156,3 +156,15 @@ export async function updateProfile(req, res, next) {
     next(handleError(500, error.message));
   }
 }
+
+export  async function getAllUsers(req,res,next){
+  try {
+    const users=await User.find().select("-password");
+    return res.status(200).json({
+      success: true,
+      users
+    });
+  } catch (error) {
+    next(handleError(500, error.message));
+  }
+}

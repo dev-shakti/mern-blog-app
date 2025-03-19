@@ -9,6 +9,8 @@ import Blogs from "./pages/Blogs"
 import BlogDetails from "./pages/BlogDetails"
 import FilterBlogs from "./components/FilterBlogs"
 import SearchResults from "./components/SearchResults"
+import UserDetails from "./pages/User"
+import CommentPage from "./pages/CommentPage"
 
 
 
@@ -26,6 +28,8 @@ function App() {
            <Route path="/blog/:categoryName/:slug" element={<BlogDetails/>}/>
            <Route path="/blog/category/:categoryId/:categoryName" element={<FilterBlogs/>}/>
            <Route path="/blog/search" element={<SearchResults/>}/>
+           <Route path="/user-detail" element={<UserDetails/>}/>
+           <Route path="/comments" element={<CommentPage/>}/>
         </Route>
         <Route path="/login" element={<Login/>}/>
         <Route path="/register" element={<Register/>}/>

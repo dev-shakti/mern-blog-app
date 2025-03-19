@@ -33,7 +33,6 @@ export async function addLike(req, res, next) {
 export async function likeCount(req, res, next) {
   const { blogId } = req.params;
   
-  console.log("Received blogId:", blogId, "Type:", typeof blogId);
 
   if (!mongoose.Types.ObjectId.isValid(blogId)) {
     return next(handleError(400, `Invalid Blog ID: ${blogId}`));

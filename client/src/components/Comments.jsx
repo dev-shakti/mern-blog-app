@@ -26,7 +26,7 @@ const commentFormSchema = z.object({
 const Comments = ({ blogData }) => {
   const { user } = useSelector((state) => state.auth);
   const [refresh, setRefresh] = useState(false);
-
+  const [comments,setComments]=useState([])
   const form = useForm({
     resolver: zodResolver(commentFormSchema),
     defaultValues: {
@@ -63,6 +63,9 @@ const Comments = ({ blogData }) => {
         return;
       }
       showToast("success", data.message);
+     setComments([...comments,data.comment])
+     setRefresh(true)
+     
       setRefresh(true); // Toggle refresh state to trigger re-fetch
     } catch (error) {
       console.error(error.message);
@@ -105,6 +108,8 @@ const Comments = ({ blogData }) => {
 
       <CommentList
         blogData={blogData}
+        comments={comments}
+        setComments={setComments}
         refresh={refresh}
         setRefresh={setRefresh}
       />

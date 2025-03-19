@@ -1,40 +1,45 @@
 import getEnv from "@/helpers/getEnv";
 import useFetch from "@/hooks/useFetch";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import Loading from "./common/Loading";
 import moment from "moment";
 
-const CommentList = ({ blogData, refresh, setRefresh }) => {
+const CommentList = ({
+  blogData,
+  comments,
+  setComments,
+  refresh,
+  setRefresh,
+}) => {
   const blogId = blogData?.blog?._id;
 
-  const url = blogId ? `${getEnv("VITE_BASE_URL")}/comment/get/${blogId}` : null;
-  
-  const { loading, data, error, refetch } = useFetch(url,{
+  const url = blogId
+    ? `${getEnv("VITE_BASE_URL")}/comment/get/${blogId}`
+    : null;
+
+  const { loading, data, error } = useFetch(url, {
     method: "GET",
-    credentials: "include", 
+    credentials: "include",
     headers: {
       "Content-Type": "application/json",
     },
   });
-  const [comments, setComments] = useState([]);
 
   useEffect(() => {
     if (data && data?.comments) {
       setComments(data.comments);
     }
-  }, [data]);
+  }, [data, setComments]);
 
   useEffect(() => {
     if (refresh) {
-      refetch();
       setRefresh(false);
     }
-  }, [refresh, refetch,setRefresh]);
+  }, [refresh, setRefresh]);
 
   if (!blogId) {
     return <p>Loading blog data...</p>;
   }
-
 
   if (loading) {
     return <Loading />;
@@ -47,7 +52,7 @@ const CommentList = ({ blogData, refresh, setRefresh }) => {
   return (
     <>
       <h4 className="font-bold text-lg text-gray-700 my-6">
-        {data?.totalComments ?? 0} Comments
+        {comments.length} Comments
       </h4>
       {comments && comments.length > 0 ? (
         comments.map((comment) => (
@@ -62,7 +67,9 @@ const CommentList = ({ blogData, refresh, setRefresh }) => {
                 {comment.userId.name}
               </h4>
               <p className="text-sm text-gray-700">{comment.comment}</p>
-              <p className="text-sm text-gray-700 mt-3">{moment(comment.createdAt).format("DD-MM-YYYY")}</p>
+              <p className="text-sm text-gray-700 mt-3">
+                {moment(comment.createdAt).format("DD-MM-YYYY")}
+              </p>
             </div>
           </div>
         ))

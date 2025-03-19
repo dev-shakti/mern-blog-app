@@ -12,7 +12,13 @@ const FilterBlogs = () => {
   const url = categoryId
     ? `${getEnv("VITE_BASE_URL")}/blog/get/blog/${categoryId}`
     : null;
-  const { data: blogData, loading, error } = useFetch(url, {}, [categoryId]);
+  const { data: blogData, loading, error } = useFetch(url, {
+    method: "GET",
+    credentials: "include", 
+    headers: {
+      "Content-Type": "application/json",
+    },
+  }, [categoryId,categoryName]);
 
 
 
@@ -23,7 +29,6 @@ const FilterBlogs = () => {
   if (error) {
     return <p className="text-red-500 text-xl">Blogs Not Found</p>;
   }
-
 
   return (
     <div className="p-6"> 

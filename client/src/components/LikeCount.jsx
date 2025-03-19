@@ -12,7 +12,13 @@ const LikeCount = ({ blogId }) => {
   const [like,setLike]=useState(false)
 
  const url = blogId ? `${getEnv("VITE_BASE_URL")}/like/get/${blogId}` : null;
- const { data } = useFetch(url);
+ const { data } = useFetch(url,{
+  method: "GET",
+  credentials: "include", 
+  headers: {
+    "Content-Type": "application/json",
+  },
+});
 
  
   useEffect(() => {

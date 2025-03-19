@@ -1,10 +1,13 @@
 import { useEffect, useState } from "react";
 import { Input } from "./ui/input";
 import { SearchIcon } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
+
 const SearchBox = () => {
   const [searchInput, setSearchInput] = useState("");
-
+  const [searchParams] = useSearchParams();
+  const query = searchParams.get("q");
+  const location = useLocation();
   const navigate = useNavigate();
 
   function handleInputChange(e) {
@@ -13,17 +16,18 @@ const SearchBox = () => {
   }
 
   useEffect(() => {
-    const timeout=setTimeout(() => {
+    const timeout = setTimeout(() => {
       if (searchInput.trim()) {
         navigate(`/blog/search?q=${searchInput}`);
-      } else {
-        navigate("/", { replace: true }); 
+      } else if (
+        location.pathname === "/blog/search" && query
+      ) {
+        navigate("/", { replace: true });
       }
-    },300)
+    }, 300);
 
-    return () => clearTimeout(timeout)
-   
-  }, [searchInput, navigate]);
+    return () => clearTimeout(timeout);
+  }, [searchInput, navigate, location.pathname,query]);
 
   return (
     <div className="p-2 rounded-lg flex items-center gap-2 border border-gray-300 max-w-[600px] w-[80%]">

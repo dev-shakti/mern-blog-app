@@ -29,7 +29,13 @@ const blogFormSchema = z.object({
 const Blogs = () => {
   const { categories } = useCategoryActions();
   const { loading, data, error,refetch } = useFetch(
-    `${getEnv("VITE_BASE_URL")}/blog/get`
+    `${getEnv("VITE_BASE_URL")}/blog/get`,{
+      method: "GET",
+      credentials: "include", 
+      headers: {
+        "Content-Type": "application/json",
+      },
+    },
   );
   const { user } = useSelector((state) => state.auth);
   const [image, setImage] = useState(null);

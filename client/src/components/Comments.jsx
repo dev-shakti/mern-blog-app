@@ -52,8 +52,8 @@ const Comments = ({ blogData }) => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          credentials: true,
         },
+        credentials:"include",
         body: JSON.stringify(newValues),
       });
       const data = await response.json();

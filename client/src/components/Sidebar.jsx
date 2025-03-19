@@ -43,7 +43,13 @@ const items = [
 ];
 const AppSidebar = () => {
   const { data: categoryData } = useFetch(
-    `${getEnv("VITE_BASE_URL")}/category/get`
+    `${getEnv("VITE_BASE_URL")}/category/get`,{
+      method: "GET",
+      credentials: "include", 
+      headers: {
+        "Content-Type": "application/json",
+      },
+    },
   );
 
 

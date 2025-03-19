@@ -21,6 +21,13 @@ const BlogDetails = () => {
     error,
   } = useFetch(
     slug ? `${getEnv("VITE_BASE_URL")}/blog/get/${slug}` : null,
+    {
+      method: "GET",
+      credentials: "include", 
+      headers: {
+        "Content-Type": "application/json",
+      },
+    },
     [slug]
   );
 

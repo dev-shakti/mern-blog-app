@@ -12,7 +12,13 @@ const SearchResults = () => {
     data: blogData,
     loading,
     error,
-  } = useFetch(`${getEnv("VITE_BASE_URL")}/blog/search?q=${query}`);
+  } = useFetch(`${getEnv("VITE_BASE_URL")}/blog/search?q=${query}`,{
+    method: "GET",
+    credentials: "include", 
+    headers: {
+      "Content-Type": "application/json",
+    },
+  },);
 
   if (loading) {
     return <Loading />;

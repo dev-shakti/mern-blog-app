@@ -9,7 +9,13 @@ const CommentList = ({ blogData, refresh, setRefresh }) => {
 
   const url = blogId ? `${getEnv("VITE_BASE_URL")}/comment/get/${blogId}` : null;
   
-  const { loading, data, error, refetch } = useFetch(url);
+  const { loading, data, error, refetch } = useFetch(url,{
+    method: "GET",
+    credentials: "include", 
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
   const [comments, setComments] = useState([]);
 
   useEffect(() => {

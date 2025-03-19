@@ -7,7 +7,13 @@ const RelatedBlogs = ({ categoryId, blogId }) => {
   const url = categoryId
     ? `${getEnv("VITE_BASE_URL")}/blog/get/blog/${categoryId}/${blogId}`
     : null;
-  const { data } = useFetch(url);
+  const { data } = useFetch(url,{
+    method: "GET",
+    credentials: "include", 
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
 
 
   return (

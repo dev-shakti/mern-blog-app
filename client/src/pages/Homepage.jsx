@@ -8,22 +8,30 @@ const Homepage = () => {
     loading,
     data: blogData,
     error,
-  } = useFetch(`${getEnv("VITE_BASE_URL")}/blog/get`);
+  } = useFetch(`${getEnv("VITE_BASE_URL")}/blog/get`, {
+    method: "GET",
+    credentials: "include", 
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
 
-  if(loading){
-    return <Loading/>
+  if (loading) {
+    return <Loading />;
   }
 
-  if(error){
-    return <p className="text-red-500 text-xl">Blogs Not Found</p>
+  if (error) {
+    return <p className="text-red-500 text-xl">Blogs Not Found</p>;
   }
- 
+
   return (
     <div className="p-6">
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-        {blogData && blogData.blogs && blogData.blogs.length > 0
-          ? blogData.blogs.map((blog) => <BlogCard key={blog?._id} blog={blog} />)
-          : null}
+        {blogData && blogData.blogs && blogData.blogs.length > 0 ? (
+          blogData.blogs.map((blog) => <BlogCard key={blog?._id} blog={blog} />)
+        ) : (
+          <p className="text-xl font-semibold text-red-500">No Blogs Found</p>
+        )}
       </div>
     </div>
   );

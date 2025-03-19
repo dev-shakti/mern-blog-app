@@ -99,7 +99,7 @@ const Profile = () => {
     }
   }, [user]);
 
-  console.log(image);
+
 
   return (
     <div className="p-4 md:p-6">

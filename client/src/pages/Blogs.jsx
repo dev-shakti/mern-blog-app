@@ -90,9 +90,7 @@ const Blogs = () => {
     try {
       const response = await fetch(url, {
         method: method,
-        headers: {
-          credentials: true,
-        },
+        credentials: "include",
         body: formData,
       });
       const data = await response.json();
@@ -134,7 +132,7 @@ const Blogs = () => {
               method: "DELETE",
               headers: {
                 "Content-Type": "application/json",
-                credentials: true,
+                credentials: "include",
               },
             }
           );

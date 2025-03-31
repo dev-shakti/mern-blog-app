@@ -13,6 +13,7 @@ import {
 import { Link } from "react-router-dom";
 import useFetch from "@/hooks/useFetch";
 import getEnv from "@/helpers/getEnv";
+import { useSelector } from "react-redux";
 
 const items = [
   {
@@ -52,6 +53,18 @@ const AppSidebar = () => {
     },
   );
 
+ const {user,isLoggedIn}=useSelector((state) =>state.auth);
+
+   // Define menu items based on user role
+   const filteredItems = items.filter((item) => {
+    if (user && isLoggedIn) {
+      if (user.role === "admin") {
+        return ["Home", "Users", "Categories"].includes(item.title);
+      }
+      return ["Home", "Blogs", "Comments"].includes(item.title);
+    }
+    return false; // Hide everything if not logged in
+  });
 
   return (
     <Sidebar>
@@ -60,7 +73,7 @@ const AppSidebar = () => {
           <SidebarGroupLabel>Application</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
-              {items.map((item) => (
+              {filteredItems.map((item) => (
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton asChild>
                     <Link to={item.url}>

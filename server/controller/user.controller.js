@@ -111,7 +111,6 @@ export async function updateProfile(req, res, next) {
   const data =JSON.parse(req.body.data) ;
 
   const files = req.files;
-  console.log(files);
 
   try {
     const user = await User.findById(userId);

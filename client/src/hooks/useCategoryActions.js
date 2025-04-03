@@ -32,8 +32,8 @@ export default function useCategoryActions() {
         method: method,
         headers: {
           "Content-Type": "application/json",
-          credentials: true,
         },
+        credentials: "include",
         body: JSON.stringify(values),
       });
 
@@ -70,8 +70,8 @@ export default function useCategoryActions() {
           method: "DELETE",
           headers: {
             "Content-Type": "application/json",
-            credentials: true,
           },
+          credentials: "include",
         }
       );
       const data = await response.json();

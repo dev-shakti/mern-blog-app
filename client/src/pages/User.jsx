@@ -1,6 +1,7 @@
 import Loading from "@/components/common/Loading";
 import UserListTable from "@/components/UserListTable";
 import getEnv from "@/helpers/getEnv";
+import showToast from "@/helpers/showToast";
 import useFetch from "@/hooks/useFetch";
 
 const UserDetails = () => {
@@ -8,6 +9,7 @@ const UserDetails = () => {
     data: userData,
     loading,
     error,
+    refetch
   } = useFetch(`${getEnv("VITE_BASE_URL")}/auth/all-users`, {
     method: "GET",
     credentials: "include",
@@ -25,7 +27,29 @@ const UserDetails = () => {
   }
 
   async function handleDelete(currentUserId) {
-    console.log(currentUserId);
+    try {
+      const response = await fetch(
+        `${getEnv("VITE_BASE_URL")}/auth/${currentUserId}/delete`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: "include",
+        }
+      );
+
+      if (!response.ok) {
+        showToast("error", data.message);
+        return;
+      }
+      const data = await response.json();
+      await refetch();  
+      showToast("success", data.message);
+    } catch (error) {
+      console.error(error.message);
+      showToast("error", error.message);
+    }
   }
 
   return (

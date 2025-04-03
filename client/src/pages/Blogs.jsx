@@ -94,8 +94,6 @@ const Blogs = () => {
         body: formData,
       });
       const data = await response.json();
-
-
       if (!response.ok) {
         showToast("error", data.message);
         return;
@@ -132,8 +130,8 @@ const Blogs = () => {
               method: "DELETE",
               headers: {
                 "Content-Type": "application/json",
-                credentials: "include",
               },
+              credentials: "include",
             }
           );
           const data = await response.json();

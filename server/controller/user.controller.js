@@ -108,7 +108,7 @@ export async function updateProfile(req, res, next) {
   if (!userId) {
     next(handleError(404, "User ID is missing "));
   }
-  const data =JSON.parse(req.body.data) ;
+  const data = JSON.parse(req.body.data);
 
   const files = req.files;
 
@@ -156,12 +156,29 @@ export async function updateProfile(req, res, next) {
   }
 }
 
-export  async function getAllUsers(req,res,next){
+export async function getAllUsers(req, res, next) {
   try {
-    const users=await User.find().select("-password");
+    const users = await User.find().select("-password");
     return res.status(200).json({
       success: true,
-      users
+      users,
+    });
+  } catch (error) {
+    next(handleError(500, error.message));
+  }
+}
+
+export async function deleteUser(req, res, next) {
+  const { id } = req.params;
+  try {
+    const user = await User.findByIdAndDelete(id);
+
+    if (!user) {
+      return next(handleError(404, error.message));
+    }
+    return res.status(200).json({
+      success: true,
+      message: "User deleted successfully",
     });
   } catch (error) {
     next(handleError(500, error.message));

@@ -19,18 +19,15 @@ import { logoutUser } from "@/redux/authSlice";
 
 const Navbar = ({ children }) => {
   const { user, isLoggedIn } = useSelector((state) => state.auth);
-  const dispatch=useDispatch();
-  const navigate=useNavigate();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-  
   async function handleUserLogout() {
     //api call
     try {
       const response = await fetch(`${getEnv("VITE_BASE_URL")}/auth/logout`, {
         method: "GET",
-        headers: {
-          credentials: true,
-        },
+        credentials: "include",
       });
       const data = await response.json();
 
@@ -51,7 +48,7 @@ const Navbar = ({ children }) => {
   return (
     <nav className="p-4 flex justify-between items-center min-h-14 border-b bg-white">
       {children}
-      <SearchBox  />
+      <SearchBox />
       {!isLoggedIn ? (
         <Link to="/login">
           <Button className="bg-blue-600 hover:bg-blue-700 flex items-center gap-2 px-4 py-2 cursor-pointer">

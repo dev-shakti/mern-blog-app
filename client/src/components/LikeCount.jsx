@@ -38,8 +38,8 @@ const LikeCount = ({ blogId }) => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          credentials: true,
         },
+        credentials: "include",
         body: JSON.stringify({ userId: user?._id, blogId: blogId }),
       });
 

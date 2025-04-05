@@ -10,7 +10,6 @@ const Homepage = () => {
     error,
   } = useFetch(`${getEnv("VITE_BASE_URL")}/blog/get`, {
     method: "GET",
-    credentials: "include", 
     headers: {
       "Content-Type": "application/json",
     },

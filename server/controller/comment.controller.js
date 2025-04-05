@@ -58,12 +58,20 @@ export async function getComments(req, res, next) {
   }
 }
 
-export async function getAllCommentsByAdmin(req, res, next) {
+export async function getAllComments(req, res, next) {
+  const user = req.user;
+
+  let comments;
   try {
-    // Get all comments
-    const comments = await Comment.find({})
-      .populate("userId", "name")
-      .populate("blogId", "title");
+    if (user && user.role === "user") {
+      comments = await Comment.find({ userId: user._id })
+        .populate("userId", "name")
+        .populate("blogId", "title");
+    } else {
+      comments = await Comment.find({})
+        .populate("userId", "name")
+        .populate("blogId", "title");
+    }
 
     return res.status(200).json({
       success: true,
@@ -77,8 +85,8 @@ export async function getAllCommentsByAdmin(req, res, next) {
 export async function deleteComment(req, res, next) {
   const { commentId } = req.params;
   try {
-    const comment = await Comment.findByIdAndDelete(commentId)
-    
+    const comment = await Comment.findByIdAndDelete(commentId);
+
     if (!comment) {
       return next(handleError("404", "Comment not found"));
     }
@@ -86,7 +94,7 @@ export async function deleteComment(req, res, next) {
     return res.status(200).json({
       success: true,
       message: "Comment deleted succesfully",
-      comment
+      comment,
     });
   } catch (error) {
     next(handleError(500, error.message));

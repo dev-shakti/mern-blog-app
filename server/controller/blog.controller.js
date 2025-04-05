@@ -1,6 +1,9 @@
 import Blog from "../models/blog.model.js";
 import handleError from "../helpers/handleError.js";
 import Category from "../models/category.model.js";
+import jwt from "jsonwebtoken";
+import dotenv from "dotenv";
+dotenv.config();
 
 export async function createBlog(req, res, next) {
   const { title, slug, category, content, author } = req.body;
@@ -31,12 +34,35 @@ export async function createBlog(req, res, next) {
 }
 
 export async function getAllBlogs(req, res, next) {
+  let user = null;
+
+  const token = req.cookies?.["access-token"];
+
+  if (token) {
+    try {
+      const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+      user = decoded;
+    } catch (error) {
+      return next(handleError(403, "Invalid or expired token."));
+    }
+  }
+
+  let blogs;
   try {
-    const blogs = await Blog.find()
-      .populate("author", "name role profileImage")
-      .populate("category", "name")
-      .sort({ createdAt: -1 }) // Sort by createdAt in descending order (newest first)
-      .lean();
+    if (user && user.role === "user") {
+      blogs = await Blog.find({ author: user._id })
+        .populate("author", "name role profileImage")
+        .populate("category", "name")
+        .sort({ createdAt: -1 }) // Sort by createdAt in descending order (newest first)
+        .lean();
+    } else {
+      blogs = await Blog.find()
+        .populate("author", "name role profileImage")
+        .populate("category", "name")
+        .sort({ createdAt: -1 }) // Sort by createdAt in descending order (newest first)
+        .lean();
+    }
 
     return res.status(200).json({
       success: true,
@@ -180,7 +206,6 @@ export async function FilterBlogsByCategory(req, res, next) {
 
 export async function searchBlogs(req, res, next) {
   const { q } = req.query;
-  console.log(q);
 
   try {
     if (!q) {

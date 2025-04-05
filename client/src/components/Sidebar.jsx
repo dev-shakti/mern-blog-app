@@ -57,13 +57,13 @@ const AppSidebar = () => {
 
    // Define menu items based on user role
    const filteredItems = items.filter((item) => {
-    if (user && isLoggedIn) {
-      if (user.role === "admin") {
-        return ["Home", "Users", "Categories"].includes(item.title);
-      }
-      return ["Home", "Blogs", "Comments"].includes(item.title);
+    if (!isLoggedIn) {
+      return item.title === "Home"; // ✅ Show only "Home" if not logged in
+    } 
+    if (user?.role === "admin") {
+      return ["Home", "Users", "Categories","Blogs"].includes(item.title);
     }
-    return false; // Hide everything if not logged in
+    return ["Home", "Blogs", "Comments"].includes(item.title);
   });
 
   return (

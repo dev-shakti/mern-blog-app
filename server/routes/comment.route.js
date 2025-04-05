@@ -2,15 +2,15 @@ import express from "express";
 import {
   addComment,
   deleteComment,
-  getAllCommentsByAdmin,
+  getAllComments,
   getComments,
 } from "../controller/comment.controller.js";
-import { authenticate } from "../middleware/authenticate.js"
+import { authenticate } from "../middleware/authenticate.js";
 const commentRoute = express.Router();
 
-commentRoute.post("/add",authenticate, addComment);
+commentRoute.post("/add", authenticate, addComment);
 commentRoute.get("/get/:blogId", getComments);
-commentRoute.get("/get", getAllCommentsByAdmin);
+commentRoute.get("/get",authenticate, getAllComments);
 commentRoute.delete("/:commentId", deleteComment);
 
 export default commentRoute;

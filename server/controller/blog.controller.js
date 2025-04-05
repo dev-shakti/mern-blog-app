@@ -167,7 +167,7 @@ export async function RelatedBlogs(req, res, next) {
     const relatedBlogs = await Blog.find({
       category: category,
       _id: { $ne: blogId },
-    });
+    }).populate("category","name")
 
     return res.status(200).json({
       success: true,

@@ -18,7 +18,7 @@ blogRoute.get("/get",getAllBlogs);
 blogRoute.get("/get/:slug", getBlogBySlug);
 blogRoute.put("/:blogId/edit",authenticate, upload.single("file"), editBlog);
 blogRoute.delete("/:blogId/delete",authenticate, deleteBlog);
-blogRoute.get("/get/blog/:categoryId/:blogId",authenticate, RelatedBlogs);
+blogRoute.get("/get/blog/:categoryId/:blogId", RelatedBlogs);
 blogRoute.get("/get/blog/:categoryId", FilterBlogsByCategory);
 blogRoute.get("/search", searchBlogs);
 

@@ -109,8 +109,8 @@ export async function updateProfile(req, res, next) {
     next(handleError(404, "User ID is missing "));
   }
   const data = JSON.parse(req.body.data);
-
-  const files = req.files;
+  console.log(data);
+  
 
   try {
     const user = await User.findById(userId);
@@ -128,17 +128,8 @@ export async function updateProfile(req, res, next) {
     }
 
     //Upload an image
-    if (req.file) {
-      try {
-        const uploadResult = await cloudinary.uploader.upload(req.file.path, {
-          folder: "mern-blog-app",
-          resource_type: "auto",
-        });
-
-        user.profileImage = uploadResult.secure_url;
-      } catch (error) {
-        return next(handleError(500, error.message)); // Corrected error handling
-      }
+    if(req.file){
+      user.profileImage=req.file.path;
     }
 
     await user.save();

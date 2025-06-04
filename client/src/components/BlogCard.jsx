@@ -21,7 +21,7 @@ const BlogCard = ({ blog }) => {
         <div className="flex justify-between items-center">
           <div className="flex gap-3">
             {blog?.author?.profileImage ? (
-              <img src={blog.author.profileImage} alt="author-image" />
+              <img src={blog.author.profileImage} alt="author-image" className="w-10 h-10 rounded-full object-cover"/>
             ) : (
               <Avatar>
                 <AvatarImage src="https://github.com/shadcn.png" />

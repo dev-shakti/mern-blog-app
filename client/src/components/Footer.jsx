@@ -1,11 +1,13 @@
-import React from 'react'
 
 const Footer = () => {
   return (
-    <footer>
-      Footer
+    <footer className="bg-background text-foreground py-4 text-center border-t border-border">
+      <p className="text-sm">
+        &copy; {new Date().getFullYear()} Created by Sakti Sumant Das. All
+        rights reserved.
+      </p>
     </footer>
-  )
-}
+  );
+};
 
-export default Footer
+export default Footer;

@@ -53,6 +53,7 @@ const BlogDetails = () => {
                 <img
                   src={blogData.blog.author.profileImage}
                   alt="profile-image"
+                  className="w-16 h-16 rounded-full object-cover"
                 />
               ) : (
                 <Avatar>

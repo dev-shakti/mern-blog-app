@@ -60,7 +60,7 @@ const CommentList = ({
             <img
               src={comment.userId.profileImage || "NA"}
               alt="profile-image"
-              className="w-24 h-24 object-cover rounded-full"
+              className="w-12 h-12 object-cover rounded-full"
             />
             <div>
               <h4 className="text-lg font-semibold tracking-tight">

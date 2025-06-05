@@ -38,6 +38,7 @@ const Profile = () => {
   const [file, setFile] = useState(null);
   const { user } = useSelector((state) => state.auth);
   const [userId, setUserId] = useState(user?._id || "");
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -56,19 +57,20 @@ const Profile = () => {
     if (file) {
       const imageUrl = URL.createObjectURL(file); // Create a preview URL
       setImage(imageUrl);
-      setFile(file) // Store the file for upload
+      setFile(file); // Store the file for upload
     }
   }
 
   async function onSubmit(values) {
     const formData = new FormData();
     if (file) {
-      formData.append("file", file); 
+      formData.append("file", file);
     }
     formData.append("data", JSON.stringify(values));
 
     //api call
     try {
+      setLoading(true);
       const response = await fetch(
         `${getEnv("VITE_BASE_URL")}/auth/${userId}/profile-update`,
         {
@@ -91,6 +93,8 @@ const Profile = () => {
     } catch (error) {
       console.error("Registration error:", error.message);
       showToast("error", error.message);
+    } finally {
+      setLoading(false);
     }
   }
   useEffect(() => {
@@ -98,8 +102,6 @@ const Profile = () => {
       setUserId(user._id);
     }
   }, [user]);
-
-
 
   return (
     <div className="p-4 md:p-6">
@@ -190,9 +192,14 @@ const Profile = () => {
               />
               <Button
                 type="submit"
-                className="bg-blue-500 hover:bg-blue-600 cursor-pointer w-full"
+                disabled={loading}
+                className={`w-full cursor-pointer ${
+                  loading
+                    ? "bg-gray-400 cursor-not-allowed"
+                    : "bg-blue-500 hover:bg-blue-600"
+                }`}
               >
-                Save Changes
+                {loading ? "Saving" : "Save Changes"}
               </Button>
             </form>
           </CardContent>

@@ -49,7 +49,7 @@ const AddBlogDialog = ({
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(handleBlogForm)}
-            className="space-y-4"
+            className="space-y-4 grid grid-cols-2"
           >
             {/* Category Input */}
             <FormField
@@ -109,10 +109,10 @@ const AddBlogDialog = ({
               control={form.control}
               name="slug"
               render={({ field }) => (
-                <FormItem>
+                <FormItem className="col-span-2">
                   <FormLabel className="text-lg font-medium">Slug</FormLabel>
                   <FormControl>
-                    <Input placeholder="Slug" {...field} />
+                    <Input placeholder="Slug" {...field} className="col-span-2" />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -154,7 +154,7 @@ const AddBlogDialog = ({
               control={form.control}
               name="content"
               render={({ field }) => (
-                <FormItem>
+                <FormItem className="col-span-2">
                   <FormLabel className="text-lg font-medium">Content</FormLabel>
                   <FormControl>
                     <Textarea
@@ -174,7 +174,7 @@ const AddBlogDialog = ({
               disabled={loading}
               className={`${
                 loading ? "cursor-not-allowed bg-gray-300 text-gray-900 " : ""
-              }bg-violet-500 hover:bg-violet-600 cursor-pointer w-full py-2 text-lg font-medium `}
+              }bg-violet-500 col-span-2 hover:bg-violet-600 cursor-pointer w-full py-2 text-lg font-medium `}
             >
              <Loader2 className={`w-4 h-4 ${loading ? "animate-spin block" : "hidden"}`} />
               <span className="ml-2">

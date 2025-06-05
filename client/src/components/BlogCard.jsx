@@ -24,7 +24,7 @@ const BlogCard = ({ blog }) => {
               <img src={blog.author.profileImage} alt="author-image" className="w-10 h-10 rounded-full object-cover"/>
             ) : (
               <Avatar>
-                <AvatarImage src="https://github.com/shadcn.png" />
+                <AvatarImage src="https://ui-avatars.com/api/?name=S+S+Das&background=random" />
                 <AvatarFallback>CN</AvatarFallback>
               </Avatar>
             )}

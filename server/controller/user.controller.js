@@ -109,8 +109,6 @@ export async function updateProfile(req, res, next) {
     next(handleError(404, "User ID is missing "));
   }
   const data = JSON.parse(req.body.data);
-  console.log(data);
-  
 
   try {
     const user = await User.findById(userId);

@@ -12,6 +12,8 @@ import { Input } from "@/components/ui/input";
 import getEnv from "@/helpers/getEnv";
 import showToast from "@/helpers/showToast";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Loader } from "lucide-react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import { z } from "zod";
@@ -32,6 +34,7 @@ const formSchema = z.object({
 });
 
 const Register = () => {
+  const [loading, setLoading] = useState(false);
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -48,6 +51,7 @@ const Register = () => {
    
     //api call
     try {
+      setLoading(true);
       const response = await fetch(`${getEnv("VITE_BASE_URL")}/auth/register`, {
         method: "POST", 
         headers: {
@@ -67,6 +71,8 @@ const Register = () => {
     } catch (error) {
       console.error("Registration error:", error.message); 
       showToast("error",error.message);
+    }finally{
+      setLoading(false)
     }
   }
   return (
@@ -129,11 +135,20 @@ const Register = () => {
                 </FormItem>
               )}
             />
-            <Button
+               <Button
               type="submit"
-              className="bg-blue-500 hover:bg-blue-600 cursor-pointer w-full"
+              disabled={loading}
+              className={`w-full cursor-pointer ${
+                loading
+                  ? "bg-gray-400 cursor-not-allowed"
+                  : "bg-blue-500 hover:bg-blue-600"
+              }`}
             >
-              Sign up
+              {loading ? (
+                <Loader className="w-4 h-4 animate-spin" />
+              ) : (
+                <span>Signup</span>
+              )}
             </Button>
             <p className="text-sm text-gray-600 text-center">
               Dont have account ?{" "}

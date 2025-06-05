@@ -13,7 +13,7 @@ import { Button } from "@/components/ui/button";
 import Loading from "./common/Loading";
 import moment from "moment";
 
-const UserListTable = ({ users,onDelete }) => {
+const UserListTable = ({ users, onDelete }) => {
   return (
     <Card>
       <CardContent>
@@ -36,20 +36,19 @@ const UserListTable = ({ users,onDelete }) => {
                   <TableCell className="font-medium">{user?.role}</TableCell>
                   <TableCell className="font-medium">{user?.name}</TableCell>
                   <TableCell className="font-medium">{user?.email}</TableCell>
-                  {user?.profileIMage ? (
-                    <TableCell className="font-medium">
-                      {user?.profileIMage}
-                    </TableCell>
-                  ) : (
-                    <TableCell className="font-medium">NA</TableCell>
-                  )}
-
+                  <TableCell className="font-medium">
+                    <img
+                      src={user.profileImage || "https://ui-avatars.com/api/?name=S+S+Das&background=random"}
+                      alt="user-profileImage"
+                      className="w-10 h-10 rounded-full object-cover"
+                    />
+                  </TableCell>
                   <TableCell className="font-medium">
                     {moment(user?.createdAt).format("DD-MM-YYYY")}
                   </TableCell>
                   <TableCell className="text-right">
                     <Button
-                    onClick={() => onDelete(user?._id)}
+                      onClick={() => onDelete(user?._id)}
                       variant="outline"
                       className="rounded-full hover:bg-red-500 hover:text-white cursor-pointer"
                     >

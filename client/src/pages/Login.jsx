@@ -13,6 +13,8 @@ import getEnv from "@/helpers/getEnv";
 import showToast from "@/helpers/showToast";
 import { loginUser } from "@/redux/authSlice";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Loader } from "lucide-react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
@@ -26,6 +28,8 @@ const formSchema = z.object({
 });
 
 const Login = () => {
+  const [loading, setLoading] = useState(false);
+
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -33,17 +37,17 @@ const Login = () => {
       password: "",
     },
   });
-  const dispatch=useDispatch();
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   async function onSubmit(values) {
     //api call
     try {
+      setLoading(true);
       const response = await fetch(`${getEnv("VITE_BASE_URL")}/auth/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          
         },
         credentials: "include",
         body: JSON.stringify(values),
@@ -55,12 +59,14 @@ const Login = () => {
         return;
       }
 
-      dispatch(loginUser(data.user))
+      dispatch(loginUser(data.user));
       navigate("/");
       showToast("success", data.message);
     } catch (error) {
       console.error("Registration error:", error.message);
       showToast("error", error.message);
+    } finally {
+      setLoading(false);
     }
   }
   return (
@@ -99,9 +105,18 @@ const Login = () => {
             />
             <Button
               type="submit"
-              className="bg-blue-500 hover:bg-blue-600 cursor-pointer w-full"
+              disabled={loading}
+              className={`w-full cursor-pointer ${
+                loading
+                  ? "bg-gray-400 cursor-not-allowed"
+                  : "bg-blue-500 hover:bg-blue-600"
+              }`}
             >
-              Login
+              {loading ? (
+                <Loader className="w-4 h-4 animate-spin" />
+              ) : (
+                <span>Login</span>
+              )}
             </Button>
             <p className="text-sm text-gray-600 text-center">
               Already have an account ?{" "}

@@ -58,7 +58,7 @@ const CommentList = ({
         comments.map((comment) => (
           <div key={comment._id} className="flex items-start gap-3">
             <img
-              src={comment.userId.profileImage || "NA"}
+              src={comment.userId.profileImage || "https://ui-avatars.com/api/?name=S+S+Das&background=random"}
               alt="profile-image"
               className="w-12 h-12 object-cover rounded-full"
             />

@@ -60,7 +60,7 @@ const Navbar = ({ children }) => {
         <DropdownMenu>
           <DropdownMenuTrigger>
             <Avatar>
-              <AvatarImage src={user?.profileImage || "https://github.com/shadcn.png"} />
+              <AvatarImage src={user?.profileImage || "https://ui-avatars.com/api/?name=S+S+Das&background=random"} />
               <AvatarFallback>CN</AvatarFallback>
             </Avatar>
           </DropdownMenuTrigger>

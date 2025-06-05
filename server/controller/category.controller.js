@@ -78,7 +78,6 @@ export async function updateCategory(req, res, next) {
 
 export async function deleteCategory(req, res, next) {
     const { categoryId } = req.params;
-    console.log(categoryId);
     
   try {
     const category=await Category.findByIdAndDelete(categoryId);

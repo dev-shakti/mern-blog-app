@@ -3,7 +3,7 @@ import Loading from "@/components/common/Loading";
 import getEnv from "@/helpers/getEnv";
 import showToast from "@/helpers/showToast";
 import useFetch from "@/hooks/useFetch";
-import React, { useEffect } from "react";
+import React from "react";
 
 const CommentPage = () => {
   const {
@@ -40,7 +40,6 @@ const CommentPage = () => {
 
       const data = await response.json();
       await refetch();
-      console.log(data);
   
       showToast("success", data.message);
     } catch (error) {

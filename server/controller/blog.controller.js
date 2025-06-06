@@ -37,17 +37,16 @@ export async function getAllBlogs(req, res, next) {
   let user = null;
 
   const token = req.cookies?.["access-token"];
-
+  
   if (token) {
     try {
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
-
       user = decoded;
     } catch (error) {
       return next(handleError(403, "Invalid or expired token."));
     }
   }
-
+  
   let blogs;
   try {
     if (user && user.role === "user") {
@@ -56,7 +55,7 @@ export async function getAllBlogs(req, res, next) {
         .populate("category", "name")
         .sort({ createdAt: -1 }) // Sort by createdAt in descending order (newest first)
         .lean();
-    } else {
+    } else {     
       blogs = await Blog.find()
         .populate("author", "name role profileImage")
         .populate("category", "name")

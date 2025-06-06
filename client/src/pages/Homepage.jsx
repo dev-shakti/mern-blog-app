@@ -10,7 +10,6 @@ const Homepage = () => {
     error,
   } = useFetch(`${getEnv("VITE_BASE_URL")}/blog/get`, {
     method: "GET",
-    credentials: "include",
     headers: {
       "Content-Type": "application/json",
     },
@@ -23,7 +22,9 @@ const Homepage = () => {
   if (error) {
     return <p className="text-red-500 text-xl">Blogs Not Found</p>;
   }
-
+  
+  console.log(blogData);
+  
   return (
     <div className="p-6">
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">

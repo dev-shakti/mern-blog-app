@@ -5,7 +5,13 @@ import showToast from "@/helpers/showToast";
 
 export default function useCategoryActions() {
   const { loading, data, error } = useFetch(
-    `${getEnv("VITE_BASE_URL")}/category/get`
+    `${getEnv("VITE_BASE_URL")}/category/get`,{
+      method: "GET",
+      credentials: "include", 
+      headers: {
+        "Content-Type": "application/json",
+      },
+    },
   );
   const [categories, setCategories] = useState([]);
 

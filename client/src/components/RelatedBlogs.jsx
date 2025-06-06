@@ -11,6 +11,7 @@ const RelatedBlogs = ({ categoryId, blogId }) => {
     : null;
   const { data, loading, error } = useFetch(url, {
     method: "GET",
+    credentials: "include",
     headers: {
       "Content-Type": "application/json",
     },

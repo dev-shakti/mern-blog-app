@@ -23,7 +23,6 @@ const CategoryListTable = ({ categories, loading, error,onEdit,onDelete }) => {
     <Card>
       <CardContent>
         <Table>
-          <TableCaption>A list of your categories.</TableCaption>
           <TableHeader>
             <TableRow>
               <TableHead>Category Name</TableHead>

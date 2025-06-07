@@ -106,7 +106,7 @@ const Profile = () => {
   return (
     <div className="p-4 md:p-6">
       <Form {...form}>
-        <Card className="w-full mx-auto max-w-4xl bg-white rounded-lg shadow-xl">
+        <Card className="w-full mx-auto max-w-4xl bg-background rounded-lg shadow-xl">
           <CardContent>
             <div className="flex justify-center mb-4">
               <Dropzone onDrop={(acceptedFiles) => handleFile(acceptedFiles)}>
@@ -133,7 +133,7 @@ const Profile = () => {
               </Dropzone>
             </div>
 
-            <h2 className="text-2xl font-bold mb-6 text-center text-slate-800">
+            <h2 className="text-2xl font-bold mb-6 text-center text-foreground">
               Update your Profile
             </h2>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
@@ -142,7 +142,7 @@ const Profile = () => {
                 name="name"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-gray-600">Name</FormLabel>
+                    <FormLabel className="text-muted-foreground">Name</FormLabel>
                     <FormControl>
                       <Input placeholder="Enter your Name" {...field} />
                     </FormControl>
@@ -155,7 +155,7 @@ const Profile = () => {
                 name="email"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-gray-600">Email</FormLabel>
+                    <FormLabel className="text-muted-foreground">Email</FormLabel>
                     <FormControl>
                       <Input placeholder="Enter your email" {...field} />
                     </FormControl>
@@ -168,7 +168,7 @@ const Profile = () => {
                 name="bio"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-gray-600">Bio</FormLabel>
+                    <FormLabel className="text-muted-foreground">Bio</FormLabel>
                     <FormControl>
                       <Textarea placeholder="Enter your Bio" {...field} />
                     </FormControl>
@@ -182,7 +182,7 @@ const Profile = () => {
                 type="password"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-gray-600">Password</FormLabel>
+                    <FormLabel className="text-muted-foreground">Password</FormLabel>
                     <FormControl>
                       <Input placeholder="******" {...field} />
                     </FormControl>
@@ -193,10 +193,10 @@ const Profile = () => {
               <Button
                 type="submit"
                 disabled={loading}
-                className={`w-full cursor-pointer ${
+                className={`w-full cursor-pointer text-foreground ${
                   loading
                     ? "bg-gray-400 cursor-not-allowed"
-                    : "bg-blue-500 hover:bg-blue-600"
+                    : "bg-violet-500 hover:bg-violet-600"
                 }`}
               >
                 {loading ? "Saving" : "Save Changes"}

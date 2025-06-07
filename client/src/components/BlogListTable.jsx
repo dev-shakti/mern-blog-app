@@ -24,7 +24,6 @@ const BlogListTable = ({blogs,loading,error,onEdit,onDelete}) => {
     <Card>
       <CardContent>
         <Table>
-          <TableCaption>A list of your blogs.</TableCaption>
           <TableHeader>
             <TableRow>
               <TableHead>Title</TableHead>

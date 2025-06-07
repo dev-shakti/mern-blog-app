@@ -41,7 +41,7 @@ const BlogDetails = () => {
     <section className="p-6">
       <div className="flex flex-col md:flex-row gap-6">
         <div className="w-full md:w-[70%]">
-          <Card className="bg-white rounded-lg shadow-md hover:shadow-xl w-full max-w-5xl mx-auto">
+          <Card className="bg-muted/30 rounded-lg shadow-md hover:shadow-xl w-full max-w-5xl mx-auto">
             <div className="p-4 lg:px-8">
               <div className="flex justify-between items-center">
                 <div className="flex gap-4">
@@ -58,15 +58,15 @@ const BlogDetails = () => {
                     </Avatar>
                   )}
                   <div className="flex flex-col">
-                    <h3 className="text-lg lg:text-2xl font-bold tracking-tight">
+                    <h3 className="text-lg lg:text-2xl text-foreground font-bold tracking-tight">
                       {blogData?.blog?.author?.name}
                     </h3>
-                    <p className="text-sm text-gray-600">Posted 2 days ago</p>
+                    <p className="text-sm text-muted-foreground">Posted 2 days ago</p>
                   </div>
                 </div>
                   <LikeCount blogId={blogData?.blog?._id} />             
               </div>
-              <h2 className="text-2xl font-bold mt-6">
+              <h2 className="text-2xl font-bold mt-6 text-foreground">
                 {blogData?.blog?.title}
               </h2>
               <div className="w-full my-6">
@@ -77,11 +77,11 @@ const BlogDetails = () => {
                 />
               </div>
 
-              <p className="text-gray-700 tracking-normal leading-wide">
+              <p className="text-muted-foreground tracking-normal leading-wide">
                 {blogData?.blog?.content}
               </p>
               <Separator className="my-6" />
-              <h4 className="text-xl font-bold tracking-tight mb-4">
+              <h4 className="text-xl font-bold text-foreground tracking-tight mb-4">
                 Post Comments
               </h4>
               <Comments blogData={blogData} />

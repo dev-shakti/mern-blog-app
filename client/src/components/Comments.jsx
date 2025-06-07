@@ -83,12 +83,12 @@ const Comments = ({ blogData }) => {
             name="comment"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="font-semibold text-lg text-gray-700">
+                <FormLabel className="font-semibold text-lg text-foreground">
                   Comment
                 </FormLabel>
                 <FormControl>
                   <Textarea
-                    className="resize-none mt-1"
+                    className="resize-none mt-1 text-muted-foreground"
                     placeholder="Add your comment..."
                     {...field}
                   />
@@ -99,7 +99,7 @@ const Comments = ({ blogData }) => {
           />
           <Button
             type="submit"
-            className="bg-violet-500 hover:bg-violet-600 cursor-pointer"
+            className="bg-violet-500 hover:bg-violet-600 cursor-pointer text-foreground"
           >
             Submit
           </Button>

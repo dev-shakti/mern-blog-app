@@ -170,7 +170,7 @@ const Blogs = () => {
       <div className="flex justify-end mb-6">
         <Button
           onClick={() => setOpen(true)}
-          className="bg-violet-500 hover:bg-violet-600 cursor-pointer"
+          className="bg-violet-500 hover:bg-violet-600 text-foreground cursor-pointer"
         >
           Add Blog
         </Button>

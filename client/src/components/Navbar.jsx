@@ -47,13 +47,13 @@ const Navbar = ({ children }) => {
   }
 
   return (
-    <nav className="p-4 flex justify-between items-center min-h-14 border-b bg-white">
+    <nav className="p-4 flex justify-between items-center min-h-14 border-b bg-background">
       {children}
       <SearchBox />
       <ModeToggle/>
       {!isLoggedIn ? (
         <Link to="/login">
-          <Button className="bg-blue-600 hover:bg-blue-700 flex items-center gap-2 px-4 py-2 cursor-pointer">
+          <Button className="bg-violet-500 hover:bg-violet-600 text-foreground flex items-center gap-2 px-4 py-2 cursor-pointer">
             <LogInIcon className="w-6 h-6" />
             Sign in
           </Button>

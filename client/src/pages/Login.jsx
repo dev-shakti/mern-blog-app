@@ -72,9 +72,9 @@ const Login = () => {
   return (
     <div className="flex justify-center items-center w-full min-h-screen">
       <Form {...form}>
-        <Card className="p-6 rounded-lg shadow-xl bg-white w-full max-w-md mx-auto px-4">
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-            <h2 className="text-xl font-bold mb-4 text-center text-slate-800">
+        <Card className="p-6 rounded-lg shadow-xl bg-background w-full max-w-md mx-auto px-4">
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 ">
+            <h2 className="text-xl font-bold mb-4 text-foreground text-center ">
               Login to Your Account
             </h2>
             <FormField
@@ -82,9 +82,9 @@ const Login = () => {
               name="email"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Email</FormLabel>
+                  <FormLabel className="text-muted-foreground">Email</FormLabel>
                   <FormControl>
-                    <Input placeholder="Enter your email" {...field} />
+                    <Input placeholder="Enter your email" {...field} className="bg-transparent" />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -95,9 +95,9 @@ const Login = () => {
               name="password"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Password</FormLabel>
+                  <FormLabel className="text-muted-foreground">Password</FormLabel>
                   <FormControl>
-                    <Input type="password" placeholder="******" {...field} />
+                    <Input type="password" placeholder="******" {...field} className="bg-transparent"/>
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -109,20 +109,20 @@ const Login = () => {
               className={`w-full cursor-pointer ${
                 loading
                   ? "bg-gray-400 cursor-not-allowed"
-                  : "bg-blue-500 hover:bg-blue-600"
+                  : "bg-violet-500 hover:bg-violet-600"
               }`}
             >
               {loading ? (
                 <Loader className="w-4 h-4 animate-spin" />
               ) : (
-                <span>Login</span>
+                <span className="text-foreground">Login</span>
               )}
             </Button>
-            <p className="text-sm text-gray-600 text-center">
+            <p className="text-sm text-muted-foreground text-center">
               Already have an account ?{" "}
               <Link
                 to="/register"
-                className="hover:underline text-blue-500 hover:text-blue-600"
+                className="hover:underline text-violet-500 hover:text-violet-600"
               >
                 Sign up
               </Link>

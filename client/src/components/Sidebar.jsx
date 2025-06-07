@@ -76,9 +76,9 @@ const AppSidebar = () => {
               {filteredItems.map((item) => (
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton asChild>
-                    <Link to={item.url}>
+                    <Link to={item.url} className="text-muted-foreground">
                       <item.icon />
-                      <span>{item.title}</span>
+                      <span >{item.title}</span>
                     </Link>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
@@ -87,7 +87,7 @@ const AppSidebar = () => {
           </SidebarGroupContent>
         </SidebarGroup>
         <SidebarGroup>
-          <SidebarGroupLabel>Categories</SidebarGroupLabel>
+          <SidebarGroupLabel className="text-foreground text-lg">Categories</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
               {categoryData &&
@@ -96,7 +96,7 @@ const AppSidebar = () => {
                 ? categoryData.categories.map((cat) => (
                     <SidebarMenuItem key={cat?._id}>
                       <SidebarMenuButton asChild>
-                        <Link to={`/blog/category/${cat?._id}/${cat?.name}`}>
+                        <Link to={`/blog/category/${cat?._id}/${cat?.name}`} className="text-muted-foreground">
                           <span>{cat?.name}</span>
                         </Link>
                       </SidebarMenuButton>

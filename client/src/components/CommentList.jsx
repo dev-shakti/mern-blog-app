@@ -51,7 +51,7 @@ const CommentList = ({
 
   return (
     <>
-      <h4 className="font-bold text-lg text-gray-700 my-6">
+      <h4 className="font-semibold text-lg text-foreground my-6">
         {comments.length} Comments
       </h4>
       {comments && comments.length > 0 ? (
@@ -62,12 +62,12 @@ const CommentList = ({
               alt="profile-image"
               className="w-12 h-12 object-cover rounded-full"
             />
-            <div>
-              <h4 className="text-lg font-semibold tracking-tight">
+            <div >
+              <h4 className="text-lg font-semibold tracking-tight text-foreground">
                 {comment.userId.name}
               </h4>
-              <p className="text-sm text-gray-700">{comment.comment}</p>
-              <p className="text-sm text-gray-700 mt-3">
+              <p className="text-sm text-muted-foreground">{comment.comment}</p>
+              <p className="text-sm text-muted-foreground mt-3">
                 {moment(comment.createdAt).format("DD-MM-YYYY")}
               </p>
             </div>

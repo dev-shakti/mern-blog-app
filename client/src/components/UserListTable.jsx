@@ -18,7 +18,6 @@ const UserListTable = ({ users, onDelete }) => {
     <Card>
       <CardContent>
         <Table>
-          <TableCaption>A list of users.</TableCaption>
           <TableHeader>
             <TableRow>
               <TableHead>Role</TableHead>

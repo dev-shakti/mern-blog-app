@@ -45,7 +45,7 @@ const RelatedBlogs = ({ categoryId, blogId }) => {
                       alt="blog-image"
                       className="w-16 h-16 object-cover rounded-md"
                     />
-                    <h3 className="text-lg font-semibold tracking-tight">
+                    <h3 className="text-lg font-semibold tracking-tight text-muted-foreground">
                       {blog?.title}
                     </h3>
                   </div>

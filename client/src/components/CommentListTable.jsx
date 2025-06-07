@@ -18,7 +18,6 @@ import {
       <Card>
         <CardContent>
           <Table>
-            <TableCaption>A list of comments.</TableCaption>
             <TableHeader>
               <TableRow>
                 <TableHead>Username</TableHead>

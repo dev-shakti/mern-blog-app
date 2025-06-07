@@ -31,7 +31,7 @@ const AddCategoryDialog = ({
     <Dialog open={openCategoryDialog} onOpenChange={onClose}>
       <DialogContent>
         <DialogHeader className="mb-6 text-lg">
-          <DialogTitle>
+          <DialogTitle className={"text-foreground"}>
             {currentEditedId ? "Edit Category" : "Add Category"}
           </DialogTitle>
         </DialogHeader>
@@ -45,7 +45,7 @@ const AddCategoryDialog = ({
               name="name"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Name</FormLabel>
+                  <FormLabel className="text-muted-foreground">Name</FormLabel>
                   <FormControl>
                     <Input placeholder="Category" {...field} />
                   </FormControl>
@@ -58,7 +58,7 @@ const AddCategoryDialog = ({
               name="slug"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Slug</FormLabel>
+                  <FormLabel className="text-muted-foreground">Slug</FormLabel>
                   <FormControl>
                     <Input placeholder="slug" {...field} />
                   </FormControl>
@@ -68,7 +68,7 @@ const AddCategoryDialog = ({
             />
             <Button
               type="submit"
-              className="bg-violet-500 hover:bg-violet-600 cursor-pointer w-full"
+              className="bg-violet-500 hover:bg-violet-600 text-foreground cursor-pointer w-full"
             >
               {currentEditedId ? "Save changes" : "Add Category"}
             </Button>

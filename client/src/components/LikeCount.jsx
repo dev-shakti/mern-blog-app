@@ -60,10 +60,11 @@ const LikeCount = ({ blogId }) => {
     <Button
       onClick={handleLike}
       variant="outline"
-      className="flex items-center gap-1 cursor-pointer"
+      size="icon"
+      className="flex items-center gap-1 cursor-pointer bg-transparent hover:bg-muted"
     >
-      <HeartIcon className={`${like ?"text-red-500" : ""} w-6 h-6 -red-500`} />
-      <span>{likeCount}</span>
+      <HeartIcon className={`${like ?"fill-red-500" : ""} w-6 h-6 -red-500`} />
+      <span className="text-foreground text-sm">{likeCount}</span>
     </Button>
   );
 };

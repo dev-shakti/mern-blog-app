@@ -30,12 +30,12 @@ const SearchBox = () => {
   }, [searchInput, navigate, location.pathname,query]);
 
   return (
-    <div className="p-2 rounded-lg flex items-center gap-2 border border-gray-300 w-[60%] lg:w-[80%]">
+    <div className="p-2 rounded-lg flex items-center gap-2 border border-border w-[60%] lg:w-[80%]">
       <Input
         value={searchInput}
         onChange={handleInputChange}
         name="search"
-        className=" outline-none border-none text-gray-600 text-base placeholder:text-gray-400"
+        className=" outline-none border-none text-muted-foreground text-base placeholder:text-muted-foreground/30"
         placeholder="Search blog here"
       />
       <SearchIcon className="w-6 h-6 cursor-pointer text-gray-500 hover:text-gray-600 transition ease-in-out duration-300" />

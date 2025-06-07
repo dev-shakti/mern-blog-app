@@ -41,7 +41,7 @@ const AddBlogDialog = ({
     <Dialog open={open} onOpenChange={onClose}>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle className="text-2xl font-semibold">
+          <DialogTitle className="text-2xl font-semibold text-foreground">
              {currentEditedId ? "Update Entry" : "Create New"}
           </DialogTitle>
         </DialogHeader>
@@ -58,7 +58,7 @@ const AddBlogDialog = ({
               render={({ field }) => {
                 return (
                   <FormItem>
-                    <FormLabel className="text-gray-600">
+                    <FormLabel className="text-muted-foreground">
                       Category
                     </FormLabel>
                     <FormControl>
@@ -95,7 +95,7 @@ const AddBlogDialog = ({
               name="title"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-gray-600">Title</FormLabel>
+                  <FormLabel className="text-muted-foreground">Title</FormLabel>
                   <FormControl>
                     <Input placeholder="Title" {...field} />
                   </FormControl>
@@ -110,7 +110,7 @@ const AddBlogDialog = ({
               name="slug"
               render={({ field }) => (
                 <FormItem className="col-span-2">
-                  <FormLabel className="text-gray-600">Slug</FormLabel>
+                  <FormLabel className="text-muted-foreground">Slug</FormLabel>
                   <FormControl>
                     <Input placeholder="Slug" {...field} className="col-span-2" />
                   </FormControl>
@@ -121,7 +121,7 @@ const AddBlogDialog = ({
 
             {/* Image Upload */}
             <div className="space-y-2">
-              <FormLabel className="text-gray-600">
+              <FormLabel className="text-muted-foreground">
                 Upload Image
               </FormLabel>
               <Dropzone onDrop={(acceptedFiles) => handleFile(acceptedFiles)}>
@@ -155,7 +155,7 @@ const AddBlogDialog = ({
               name="content"
               render={({ field }) => (
                 <FormItem className="col-span-2">
-                  <FormLabel className="text-md text-gray-600 font-medium">Content</FormLabel>
+                  <FormLabel className="text-md text-muted-foreground font-medium">Content</FormLabel>
                   <FormControl>
                     <Textarea
                       placeholder="Write your content here..."
@@ -174,7 +174,7 @@ const AddBlogDialog = ({
               disabled={loading}
               className={`${
                 loading ? "cursor-not-allowed bg-gray-300 text-gray-900 " : ""
-              }bg-violet-500 col-span-2 hover:bg-violet-600 cursor-pointer w-full py-2 text-lg font-medium `}
+              }bg-violet-500 text-foreground col-span-2 hover:bg-violet-600 cursor-pointer w-full py-2 text-lg font-medium `}
             >
              <Loader2 className={`w-4 h-4 ${loading ? "animate-spin block" : "hidden"}`} />
               <span className="ml-2">

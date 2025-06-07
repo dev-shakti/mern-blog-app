@@ -78,9 +78,9 @@ const Register = () => {
   return (
     <div className="flex justify-center items-center w-full min-h-screen">
       <Form {...form}>
-        <Card className="p-6 rounded-lg shadow-xl bg-white w-full max-w-md mx-auto">
+        <Card className="p-6 rounded-lg shadow-xl bg-background w-full max-w-md mx-auto">
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-            <h2 className="text-xl font-bold mb-4 text-center text-slate-800">
+            <h2 className="text-xl font-bold mb-4 text-center text-foreground">
               Create An Account
             </h2>
             <FormField
@@ -88,9 +88,9 @@ const Register = () => {
               name="name"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Name</FormLabel>
+                  <FormLabel className="text-muted-foreground">Name</FormLabel>
                   <FormControl>
-                    <Input placeholder="Enter your name" {...field} />
+                    <Input placeholder="Enter your name" {...field} className="bg-transparent"/>
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -101,9 +101,9 @@ const Register = () => {
               name="email"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Email</FormLabel>
+                  <FormLabel className="text-muted-foreground">Email</FormLabel>
                   <FormControl>
-                    <Input placeholder="Enter your email" {...field} />
+                    <Input placeholder="Enter your email" {...field} className="bg-transparent" />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -114,9 +114,9 @@ const Register = () => {
               name="password"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Password</FormLabel>
+                  <FormLabel className="text-muted-foreground">Password</FormLabel>
                   <FormControl>
-                    <Input placeholder="******" {...field} />
+                    <Input placeholder="******" {...field} className="bg-transparent"/>
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -127,9 +127,9 @@ const Register = () => {
               name="confirmPassword"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Confirm Password</FormLabel>
+                  <FormLabel className="text-muted-foreground">Confirm Password</FormLabel>
                   <FormControl>
-                    <Input placeholder="******" {...field} />
+                    <Input placeholder="******" {...field} className="bg-transparent"/>
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -141,20 +141,20 @@ const Register = () => {
               className={`w-full cursor-pointer ${
                 loading
                   ? "bg-gray-400 cursor-not-allowed"
-                  : "bg-blue-500 hover:bg-blue-600"
+                  : "bg-violet-500 hover:bg-violet-600"
               }`}
             >
               {loading ? (
                 <Loader className="w-4 h-4 animate-spin" />
               ) : (
-                <span>Signup</span>
+                <span className="text-foreground">Signup</span>
               )}
             </Button>
-            <p className="text-sm text-gray-600 text-center">
+            <p className="text-sm text-muted-foreground text-center">
               Dont have account ?{" "}
               <Link
                 to="/login"
-                className="hover:underline text-blue-500 hover:text-blue-600"
+                className="hover:underline text-violet-500 hover:text-violet-600"
               >
                 Sign in
               </Link>

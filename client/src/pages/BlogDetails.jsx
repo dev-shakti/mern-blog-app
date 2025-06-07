@@ -1,12 +1,10 @@
 import Loading from "@/components/common/Loading";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Card, CardContent } from "@/components/ui/card";
+import { Card } from "@/components/ui/card";
 import getEnv from "@/helpers/getEnv";
 import useFetch from "@/hooks/useFetch";
-import { HeartIcon } from "lucide-react";
 import React from "react";
 import { useParams } from "react-router-dom";
-import { MessageCircle } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 import Comments from "@/components/Comments";
 import LikeCount from "@/components/LikeCount";
@@ -44,7 +42,7 @@ const BlogDetails = () => {
       <div className="flex flex-col md:flex-row gap-6">
         <div className="w-full md:w-[70%]">
           <Card className="bg-white rounded-lg shadow-md hover:shadow-xl w-full max-w-5xl mx-auto">
-            <CardContent>
+            <div className="p-4 lg:px-8">
               <div className="flex justify-between items-center">
                 <div className="flex gap-4">
                   {blogData?.blog?.author?.profileImage ? (
@@ -60,31 +58,22 @@ const BlogDetails = () => {
                     </Avatar>
                   )}
                   <div className="flex flex-col">
-                    <h3 className="text-xl lg:text-2xl font-bold tracking-tight">
+                    <h3 className="text-lg lg:text-2xl font-bold tracking-tight">
                       {blogData?.blog?.author?.name}
                     </h3>
-                    <p className="text-sm text-gray-600 mt-1">
-                      Posted 2 days ago
-                    </p>
+                    <p className="text-sm text-gray-600">Posted 2 days ago</p>
                   </div>
                 </div>
-                <div className="flex items-center gap-4">
-                  <LikeCount blogId={blogData?.blog?._id} />
-
-                  <div className="flex items-center gap-1">
-                    <MessageCircle className="w-6 h-6" />
-                    <span>5</span>
-                  </div>
-                </div>
+                  <LikeCount blogId={blogData?.blog?._id} />             
               </div>
               <h2 className="text-2xl font-bold mt-6">
                 {blogData?.blog?.title}
               </h2>
-              <div className="w-full h-96 my-6">
+              <div className="w-full my-6">
                 <img
                   src={blogData?.blog?.blogImage}
                   alt="blog-image"
-                  className="rounded-md object-cover w-full h-full"
+                  className="h-64 md:80 lg:h-96 w-full rounded-md object-cover"
                 />
               </div>
 
@@ -96,7 +85,7 @@ const BlogDetails = () => {
                 Post Comments
               </h4>
               <Comments blogData={blogData} />
-            </CardContent>
+            </div>
           </Card>
         </div>
         <div className="w-full md:w-[30%] mt-6 md:mt-0">

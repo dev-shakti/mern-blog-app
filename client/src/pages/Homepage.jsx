@@ -23,10 +23,9 @@ const Homepage = () => {
     return <p className="text-red-500 text-xl">Blogs Not Found</p>;
   }
   
-  console.log(blogData);
   
   return (
-    <div className="p-6">
+    <div className="p-4 lg:p-6">
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
         {blogData && blogData.blogs && blogData.blogs.length > 0 ? (
           blogData.blogs.map((blog) => <BlogCard key={blog?._id} blog={blog} />)

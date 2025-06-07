@@ -16,6 +16,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import getEnv from "@/helpers/getEnv";
 import showToast from "@/helpers/showToast";
 import { logoutUser } from "@/redux/authSlice";
+import { ModeToggle } from "./mode-toggle";
 
 const Navbar = ({ children }) => {
   const { user, isLoggedIn } = useSelector((state) => state.auth);
@@ -49,6 +50,7 @@ const Navbar = ({ children }) => {
     <nav className="p-4 flex justify-between items-center min-h-14 border-b bg-white">
       {children}
       <SearchBox />
+      <ModeToggle/>
       {!isLoggedIn ? (
         <Link to="/login">
           <Button className="bg-blue-600 hover:bg-blue-700 flex items-center gap-2 px-4 py-2 cursor-pointer">

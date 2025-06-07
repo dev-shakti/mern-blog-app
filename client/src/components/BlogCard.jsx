@@ -16,7 +16,7 @@ import { Bookmark } from "lucide-react";
 const BlogCard = ({ blog }) => { 
   return (
     <Link  to={`/blog/${blog.category.name}/${blog.slug}`}>
-     <Card className="bg-white rounded-lg shadow-md hover:shadow-xl p-4 hover:scale-105 transition-all ease-in-out duration-300 cursor-pointer">
+     <Card className="bg-white rounded-lg shadow-md hover:shadow-xl hover:scale-105  min-h-[400px] flex flex-col  transition-all ease-in-out duration-300 cursor-pointer">
       <CardHeader>
         <div className="flex justify-between items-center">
           <div className="flex gap-3">
@@ -38,15 +38,15 @@ const BlogCard = ({ blog }) => {
           </Button>
         </div>
       </CardHeader>
-      <CardContent>
+      <CardContent className="p-0">
         <img
           src={blog?.blogImage || "https://via.placeholder.com/300"}
           alt="blog-image"
-          className="rounded-md object-cover"
+          className="rounded-md object-cover  h-[200px] w-full"
         />
       </CardContent>
-      <CardFooter>
-        <h3 className="text-xl font-bold text-gray-800">{blog?.title}</h3>
+      <CardFooter className="px-4">
+        <h3 className="text-xl font-bold text-gray-800 line-clamp-2">{blog?.title}</h3>
       </CardFooter>
     </Card>
     </Link>

@@ -42,7 +42,7 @@ const AddBlogDialog = ({
       <DialogContent>
         <DialogHeader>
           <DialogTitle className="text-2xl font-semibold">
-            {currentEditedId ? "Edit" : "Add"}
+             {currentEditedId ? "Update Entry" : "Create New"}
           </DialogTitle>
         </DialogHeader>
 
@@ -58,7 +58,7 @@ const AddBlogDialog = ({
               render={({ field }) => {
                 return (
                   <FormItem>
-                    <FormLabel className="text-lg font-medium">
+                    <FormLabel className="text-gray-600">
                       Category
                     </FormLabel>
                     <FormControl>
@@ -95,7 +95,7 @@ const AddBlogDialog = ({
               name="title"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-lg font-medium">Title</FormLabel>
+                  <FormLabel className="text-gray-600">Title</FormLabel>
                   <FormControl>
                     <Input placeholder="Title" {...field} />
                   </FormControl>
@@ -110,7 +110,7 @@ const AddBlogDialog = ({
               name="slug"
               render={({ field }) => (
                 <FormItem className="col-span-2">
-                  <FormLabel className="text-lg font-medium">Slug</FormLabel>
+                  <FormLabel className="text-gray-600">Slug</FormLabel>
                   <FormControl>
                     <Input placeholder="Slug" {...field} className="col-span-2" />
                   </FormControl>
@@ -121,7 +121,7 @@ const AddBlogDialog = ({
 
             {/* Image Upload */}
             <div className="space-y-2">
-              <FormLabel className="text-lg font-medium">
+              <FormLabel className="text-gray-600">
                 Upload Image
               </FormLabel>
               <Dropzone onDrop={(acceptedFiles) => handleFile(acceptedFiles)}>
@@ -155,7 +155,7 @@ const AddBlogDialog = ({
               name="content"
               render={({ field }) => (
                 <FormItem className="col-span-2">
-                  <FormLabel className="text-lg font-medium">Content</FormLabel>
+                  <FormLabel className="text-md text-gray-600 font-medium">Content</FormLabel>
                   <FormControl>
                     <Textarea
                       placeholder="Write your content here..."

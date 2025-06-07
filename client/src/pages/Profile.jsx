@@ -142,7 +142,7 @@ const Profile = () => {
                 name="name"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Name</FormLabel>
+                    <FormLabel className="text-gray-600">Name</FormLabel>
                     <FormControl>
                       <Input placeholder="Enter your Name" {...field} />
                     </FormControl>
@@ -155,7 +155,7 @@ const Profile = () => {
                 name="email"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Email</FormLabel>
+                    <FormLabel className="text-gray-600">Email</FormLabel>
                     <FormControl>
                       <Input placeholder="Enter your email" {...field} />
                     </FormControl>
@@ -168,7 +168,7 @@ const Profile = () => {
                 name="bio"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Bio</FormLabel>
+                    <FormLabel className="text-gray-600">Bio</FormLabel>
                     <FormControl>
                       <Textarea placeholder="Enter your Bio" {...field} />
                     </FormControl>
@@ -182,7 +182,7 @@ const Profile = () => {
                 type="password"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Password</FormLabel>
+                    <FormLabel className="text-gray-600">Password</FormLabel>
                     <FormControl>
                       <Input placeholder="******" {...field} />
                     </FormControl>
